@@ -38,7 +38,7 @@ export const projectsData: ProjectDetail[] = [
       'CI/CD'
     ],
     githubUrl: undefined, // Add repository URL when available
-    architectureDiagram: '/src/assets/images/AI_Powered_Learning_Ecosystem_Microsoft_Fabric.jpg',
+    architectureDiagram: '../src/assets/images/AI_Powered_Learning_Ecosystem_Microsoft_Fabric.jpg',
     coverImage: '/src/assets/images/AI_Powered_Learning_Ecosystem_Microsoft_Fabric.jpg',
     architectureCaption: 'Microsoft Fabric Medallion Architecture & AI Data Agent Flow',
     dataIngestion:
