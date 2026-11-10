@@ -1,0 +1,2536 @@
+Here is the complete, production-grade, responsive website implementation for
+Ziaul Haq Akash. It includes a full dark/light/system theme engine, interactive
+Medallion/Lakehouse abstract data visualizations, modular project architecture
+with a full deep-dive modal, image/diagram lightbox, copyable credential IDs,
+and a structured data layer for future project expansion.
+
+Project File Structure
+
+├── index.html
+├── package.json
+├── tailwind.config.js
+├── src/
+│   ├── index.css
+│   ├── main.tsx
+│   ├── App.tsx
+│   ├── types/
+│   │   └── index.ts
+│   ├── config/
+│   │   └── siteConfig.ts
+│   ├── data/
+│   │   ├── projectsData.ts
+│   │   ├── skillsData.ts
+│   │   ├── experienceData.ts
+│   │   └── certificationsData.ts
+│   ├── context/
+│   │   └── ThemeContext.tsx
+│   └── components/
+│       ├── Navbar.tsx
+│       ├── Hero.tsx
+│       ├── DataFlowVisual.tsx
+│       ├── About.tsx
+│       ├── Skills.tsx
+│       ├── Experience.tsx
+│       ├── Projects.tsx
+│       ├── ProjectDetailModal.tsx
+│       ├── ArchitecturePlaceholder.tsx
+│       ├── Lightbox.tsx
+│       ├── Certifications.tsx
+│       ├── Contact.tsx
+│       └── Footer.tsx
+
+1. Configuration & Types
+
+src/types/index.ts
+
+export type ThemeMode = 'dark' | 'light' | 'system';
+
+export interface ProjectDetail {
+  id: string;
+  title: string;
+  subtitle: string;
+  category: 'Microsoft Fabric' | 'Azure Data Engineering' | 'Big Data & Analytics';
+  featured: boolean;
+  shortDescription: string;
+  problem: string;
+  objectives: string[];
+  solution: string;
+  businessImpact: string[];
+  technologies: string[];
+  githubUrl?: string;
+  
+  // Configurable visual placeholders
+  coverImage?: string;
+  architectureDiagram?: string;
+  architectureCaption: string;
+  screenshots?: {
+    url: string;
+    caption: string;
+  }[];
+
+  // Detailed Engineering Deep Dive
+  dataIngestion: string;
+  transformationAndProcessing: string;
+  storageAndDataModelling: string;
+  dataOrchestration: string;
+  securityAndGovernance: string;
+  analyticsAndImpact: string;
+}
+
+export interface SkillCategory {
+  title: string;
+  categoryNumber: number;
+  description: string;
+  skills: string[];
+}
+
+export interface ExperienceItem {
+  id: string;
+  role: string;
+  organization: string;
+  period: string;
+  location: string;
+  type: 'Employment' | 'Education';
+  responsibilities: string[];
+  skillsApplied?: string[];
+}
+
+export interface CertificationItem {
+  id: string;
+  title: string;
+  issuer: string;
+  issueDate: string;
+  expiryDate?: string;
+  credentialId?: string;
+}
+
+src/config/siteConfig.ts
+
+export const siteConfig = {
+  name: "Ziaul Haq Akash",
+  brandName: "ZIAUL HAQ AKASH",
+  title: "Microsoft Fabric Data Engineer | Azure Data Engineer | AI-Driven Data Solutions",
+  tagline: "Engineering Data. Building Intelligence. Enabling Better Decisions.",
+  seo: {
+    pageTitle: "Ziaul Haq Akash | Microsoft Fabric & Azure Data Engineer",
+    metaDescription:
+      "Explore the portfolio of Ziaul Haq Akash, a Microsoft Fabric and Azure Data Engineer specialising in scalable data pipelines, Azure Databricks, PySpark, modern lakehouse architecture and AI-driven data solutions.",
+    keywords: [
+      "Microsoft Fabric Data Engineer",
+      "Azure Data Engineer",
+      "Azure Databricks",
+      "PySpark",
+      "Microsoft Fabric",
+      "Data Engineering Portfolio",
+      "Azure Data Factory",
+      "Delta Lake",
+      "Power BI",
+      "AI-Driven Data Solutions"
+    ]
+  },
+  links: {
+    linkedin: "https://www.linkedin.com/in/ziaul-haq-akash/",
+    // Configurable email address placeholder
+    email: "contact@ziaulhaqakash.com", // update with your preferred email
+    // Configurable CV download file path (e.g. '/assets/cv/Ziaul_Haq_Akash_CV.pdf')
+    cvDownloadPath: "/assets/cv/Ziaul_Haq_Akash_CV.pdf",
+    cvFilename: "Ziaul_Haq_Akash_Data_Engineer_CV.pdf"
+  },
+  professionalSummary:
+    "I am a Microsoft Fabric and Azure Data Engineer focused on designing scalable data platforms, automating data pipelines, and transforming complex datasets into meaningful business insights.\n\nWith hands-on experience across Microsoft Fabric, Azure Databricks, Azure Data Factory, PySpark, Delta Lake, and Power BI, I build end-to-end data engineering solutions using modern lakehouse architectures, Medallion Architecture, incremental data processing, and CI/CD automation.\n\nMy work also explores the intersection of data engineering and AI, including conversational data agents that enable business users to interact with enterprise data using natural language.\n\nAlongside my technical projects, my professional experience in technology support and digital enablement has strengthened my ability to understand business requirements and translate technical solutions into practical outcomes.\n\nMy focus is building reliable, scalable, secure, and AI-ready data platforms that empower organisations to make better decisions.",
+  focusAreas: [
+    "Cloud Data Engineering",
+    "Modern Lakehouse Architecture",
+    "Data Pipeline Automation",
+    "AI-Powered Analytics",
+    "Business Intelligence"
+  ]
+};
+
+2. Central Data Files
+
+src/data/projectsData.ts
+
+import { ProjectDetail } from '../types';
+
+export const projectsData: ProjectDetail[] = [
+  {
+    id: 'ai-powered-learning-ecosystem',
+    title: 'AI-Powered Learning Ecosystem',
+    subtitle: 'Microsoft Fabric | AI-Powered Analytics | Enterprise Data Platform',
+    category: 'Microsoft Fabric',
+    featured: true,
+    shortDescription:
+      'Architected and implemented an end-to-end AI-powered Learning Ecosystem Data Platform using Microsoft Fabric, Medallion Architecture and Azure DevOps CI/CD automation.',
+    problem:
+      'Fragmented enterprise LMS datasets made it difficult for academic leadership to evaluate student engagement and performance trends quickly. Non-technical stakeholders lacked direct SQL skills to query complex relational schemas.',
+    objectives: [
+      'Centralize LMS events and student progress data into a single Lakehouse.',
+      'Implement an automated Medallion Architecture (Bronze, Silver, Gold).',
+      'Integrate an AI-powered conversational agent to empower natural language querying.',
+      'Implement automated deployment pipelines using Azure DevOps.'
+    ],
+    solution:
+      'Implemented an enterprise Lakehouse platform in Microsoft Fabric. Ingested raw LMS data via Fabric Data Pipelines into OneLake Bronze tables. Built automated PySpark notebooks to cleanse and structure data into Delta Silver tables, and aggregated business metrics into Gold semantic models. Integrated an AI-powered conversational data agent allowing business users to ask questions in plain English and receive instant, governed insights without writing SQL.',
+    businessImpact: [
+      'Democratised access to enterprise data across non-technical academic staff.',
+      'Accelerated business insights from weekly manual spreadsheets to real-time lakehouse reporting.',
+      'Improved learning analytics and intervention tracking for at-risk learners.',
+      'Automated deployment workflows via Azure DevOps CI/CD pipelines.',
+      'Established a scalable, enterprise foundation for AI-driven decision-making.'
+    ],
+    technologies: [
+      'Microsoft Fabric',
+      'OneLake',
+      'Lakehouse',
+      'Medallion Architecture',
+      'Data Pipelines',
+      'PySpark',
+      'AI Data Agent',
+      'Azure DevOps',
+      'CI/CD'
+    ],
+    githubUrl: undefined, // Add repository URL when available
+    architectureCaption: 'Microsoft Fabric Medallion Architecture & AI Data Agent Flow',
+    dataIngestion:
+      'Fabric Data Pipelines orchestrate scheduled extractions from enterprise LMS endpoints directly into OneLake Bronze layer in original Parquet/JSON formats.',
+    transformationAndProcessing:
+      'Fabric Spark Notebooks transform Bronze data into cleansed, deduplicated, and conforming Delta tables in the Silver layer using PySpark.',
+    storageAndDataModelling:
+      'Delta Lake on OneLake utilizing Direct Lake mode for Power BI integration. Star schema modelled in the Gold layer with business-ready dimension and fact tables.',
+    dataOrchestration:
+      'Native Microsoft Fabric Data Pipelines linked to Fabric Monitoring Hub for real-time status telemetry and failure alerts.',
+    securityAndGovernance:
+      'Microsoft Entra ID role-based access control (RBAC), workspace sensitivity labels, and OneLake data access security.',
+    analyticsAndImpact:
+      'Direct Lake Power BI semantic models combined with a conversational AI agent that generates accurate answers and visual queries on demand.'
+  },
+  {
+    id: 'enterprise-mobility-data-engine',
+    title: 'Enterprise Mobility Data Engine',
+    subtitle: 'End-to-End Incremental Lakehouse Pipeline',
+    category: 'Azure Data Engineering',
+    featured: true,
+    shortDescription:
+      'Built an automated incremental data engineering pipeline to process NYC Yellow Taxi trip data using Azure Databricks, PySpark, Delta Lake and Unity Catalog.',
+    problem:
+      'Unstructured raw data, a strict two-month vendor reporting lag, duplicate processing, and historical taxi zone changes created severe data bottlenecks and unreliable analytics.',
+    objectives: [
+      'Eliminate duplicate processing and automate incremental ingestion.',
+      'Handle schema drift and historical changes using Slowly Changing Dimensions (SCD Type 2).',
+      'Secure data assets and lineage tracking with Unity Catalog on ADLS Gen2.',
+      'Expose analytics-ready Gold tables for dynamic fleet routing and demand forecasting.'
+    ],
+    solution:
+      'Implemented a scalable Medallion Architecture (Bronze → Silver → Gold) leveraging Azure Databricks. Automated incremental processing using PySpark and Delta Lake change data capture. Configured SCD Type 2 logic for taxi zones to accurately preserve historical attributes across date boundaries. Managed unified governance with Databricks Unity Catalog and orchestrated multi-task Databricks Workflows.',
+    businessImpact: [
+      'Reliable historical reporting with zero duplicate record anomalies.',
+      'Analytics-ready Gold datasets accessible in sub-second query latency.',
+      'Improved query performance via Delta partitioning, Z-Ordering, and Liquid Clustering.',
+      'Actionable decision support for demand forecasting, revenue optimisation, and fleet deployment planning.'
+    ],
+    technologies: [
+      'Azure Databricks',
+      'PySpark',
+      'Delta Lake',
+      'Unity Catalog',
+      'ADLS Gen2',
+      'Databricks Workflows',
+      'SCD Type 2',
+      'Medallion Architecture'
+    ],
+    githubUrl:
+      'https://github.com/ziaul-akash/Enterprise-Mobility-Data-Engine-End-to-End-Incremental-ETL-with-Azure-Databricks',
+    architectureCaption: 'Azure Databricks Incremental Lakehouse Pipeline & Unity Catalog Architecture',
+    dataIngestion:
+      'ADLS Gen2 landing container ingested raw trip files with idempotent processing flags to prevent duplicate processing cycles.',
+    transformationAndProcessing:
+      'PySpark transformations enforce data quality constraints, schema validation, and SCD Type 2 dimension merge logic to handle zone boundary evolution.',
+    storageAndDataModelling:
+      'Delta Lake format with Unity Catalog metadata management. Bronze preserves raw data, Silver enforces schema and deduplication, and Gold stores aggregated trip KPIs.',
+    dataOrchestration:
+      'Databricks Workflows & Jobs orchestration with automated retry policies, cluster auto-scaling, and execution telemetry.',
+    securityAndGovernance:
+      'Unity Catalog granular column and row-level access control, unified data lineage tracking, and ADLS Gen2 managed identity integration.',
+    analyticsAndImpact:
+      'Provides downstream data scientists and dispatch analysts with curated Gold tables supporting surge demand prediction and fleet optimization.'
+  },
+  {
+    id: 'pandemicvision',
+    title: 'PandemicVision',
+    subtitle: 'End-to-End Data Intelligence Platform',
+    category: 'Azure Data Engineering',
+    featured: true,
+    shortDescription:
+      'Developed an end-to-end cloud data engineering pipeline using Microsoft Azure to integrate, process and analyse COVID-19 data from ECDC and population reference datasets.',
+    problem:
+      'COVID-19 statistics were severely fragmented across external REST APIs and semi-structured cloud repositories, making data integration, population-adjusted analysis, and timely epidemiological reporting complex and inefficient.',
+    objectives: [
+      'Automate extraction from disparate public health APIs and storage endpoints.',
+      'Normalize multi-country metrics against standard population reference datasets.',
+      'Build a robust automated hybrid transformation pipeline (PySpark & HDInsight Hive SQL).',
+      'Deliver interactive visual analytics for country-level infection rate comparisons.'
+    ],
+    solution:
+      'Designed an automated Azure data pipeline to ingest, store, transform and enrich datasets using Azure Data Factory, ADLS Gen2, Databricks (PySpark) and HDInsight (Hive SQL). Loaded curated data into Azure SQL Database and developed interactive Power BI dashboards to visualise COVID-19 trends, country-level comparisons and population-adjusted metrics.',
+    businessImpact: [
+      'Centralised public health data ingestion across global reporting sources.',
+      'Reliable normalization eliminating discrepancies in per-capita incidence calculations.',
+      'Automated scheduled processing pipelines with comprehensive ADF monitoring.',
+      'Interactive Power BI executive dashboards enabling instant cross-country comparative reporting.'
+    ],
+    technologies: [
+      'Azure Data Factory',
+      'ADLS Gen2',
+      'Azure Databricks',
+      'PySpark',
+      'Azure HDInsight',
+      'Hive SQL',
+      'Azure SQL Database',
+      'Power BI'
+    ],
+    githubUrl:
+      'https://github.com/ziaul-akash/PandemicVision-End-to-End-Data-Intelligence-Platform',
+    architectureCaption: 'PandemicVision Multi-Stage Azure Data Factory & PySpark Architecture',
+    dataIngestion:
+      'Azure Data Factory copy activities extracting daily feeds from ECDC HTTP APIs and population reference files into ADLS Gen2 raw zones.',
+    transformationAndProcessing:
+      'Azure Databricks PySpark notebooks for complex transformations alongside HDInsight Hive SQL jobs for legacy analytical cross-checks.',
+    storageAndDataModelling:
+      'ADLS Gen2 multi-tier storage backing Azure SQL Database staging and production analytical schemas.',
+    dataOrchestration:
+      'Azure Data Factory scheduled triggers, dependency handling, and pipeline alerts for failure management.',
+    securityAndGovernance:
+      'Azure Key Vault for credential and connection string secrets, Azure Active Directory RBAC permissions.',
+    analyticsAndImpact:
+      'Power BI dashboards visualizing infection trajectories, mortality rates per 100k population, and testing velocity.'
+  },
+  {
+    id: 'salesstream',
+    title: 'SalesStream',
+    subtitle: 'Automated CRM Data Engineering & Business Intelligence',
+    category: 'Azure Data Engineering',
+    featured: true,
+    shortDescription:
+      'Designed and developed an end-to-end Azure Data Engineering pipeline to transform raw CRM sales data into analytics-ready business insights.',
+    problem:
+      'Manual data ingestion, inconsistent CRM data quality, inefficient file storage formats, and complex reporting cycles delayed executive sales insights and generated excessive manual overhead.',
+    objectives: [
+      'Automate CRM ingestion without operational CRM system impact.',
+      'Standardize disparate source files into optimized columnar Parquet and Delta formats.',
+      'Integrate secret management, automated failure alerts, and Git source control.',
+      'Publish high-performance analytics to Azure Synapse and Power BI.'
+    ],
+    solution:
+      'Built an automated ETL pipeline using Azure Data Factory, Azure Databricks (PySpark), ADLS Gen2, Azure Synapse Analytics and Power BI. Integrated secure secret management with Azure Key Vault, automated email alerts via Azure Logic Apps, Azure Monitor diagnostics, and production Git repository branch deployments.',
+    businessImpact: [
+      'Automated data ingestion and transformation with zero daily manual intervention.',
+      'Substantially reduced data processing and query latency through optimized Delta storage.',
+      'Simplified complex regional currency and attribution transformations.',
+      'Improved reporting accessibility and business visibility for sales operations.',
+      'Enhanced pipeline reliability and operational visibility through proactive alerts.'
+    ],
+    technologies: [
+      'Microsoft Azure',
+      'Azure Data Factory',
+      'Azure Databricks',
+      'PySpark',
+      'ADLS Gen2',
+      'Azure Synapse Analytics',
+      'Power BI',
+      'Azure Key Vault',
+      'Azure Logic Apps',
+      'Azure Monitor',
+      'SQL',
+      'Git'
+    ],
+    githubUrl:
+      'https://github.com/ziaul-akash/SalesStream-Automated-CRM-Data-Engineering-Business-Intelligence',
+    architectureCaption: 'SalesStream Enterprise Azure Data Pipeline & Synapse Architecture',
+    dataIngestion:
+      'Azure Data Factory parameterized pipelines ingesting multi-entity CRM records into ADLS Gen2 raw landing zones.',
+    transformationAndProcessing:
+      'Modular PySpark transformation jobs executing data cleansing, deduplication, and currency normalization routines.',
+    storageAndDataModelling:
+      'Layered lake storage on ADLS Gen2 leading to Azure Synapse Analytics dedicated SQL pool star-schema tables.',
+    dataOrchestration:
+      'ADF event-based and tumbling-window triggers integrated with Logic Apps for immediate error notifications.',
+    securityAndGovernance:
+      'Zero hardcoded credentials: all connection secrets managed securely via Azure Key Vault; network firewall rules applied.',
+    analyticsAndImpact:
+      'Executive Power BI dashboards tracking monthly recurring revenue, sales pipeline velocity, and conversion attribution.'
+  }
+
+  /* =======================================================================
+   * HOW TO ADD A NEW PROJECT (PROJECT 05 TEMPLATE):
+   * Simply duplicate the block below, uncomment it, fill in your project data,
+   * and save. The website UI will automatically update with your new project!
+   * =======================================================================
+  ,{
+    id: 'project-five-slug',
+    title: 'Real-Time IoT Fleet Telemetry Platform',
+    subtitle: 'Microsoft Fabric Real-Time Intelligence | Eventstream | KQL',
+    category: 'Microsoft Fabric',
+    featured: false,
+    shortDescription: 'Real-time telemetry ingestion and anomaly detection pipeline using Fabric Eventstream and KQL.',
+    problem: 'Fleet managers suffered from 30-minute telemetry delays causing late maintenance actions.',
+    objectives: [
+      'Ingest 10,000 events/second from connected vehicles',
+      'Implement real-time threshold detection using Fabric Activator',
+      'Query real-time tables using KQL with sub-second response times'
+    ],
+    solution: 'Designed an Eventstream pipeline connected to Eventhouse with automated Activator alert triggers.',
+    businessImpact: [
+      'Prevented critical engine breakdowns with real-time temperature alerts.',
+      'Sub-second query latencies on over 50 million monthly sensor events.'
+    ],
+    technologies: ['Fabric Real-Time Intelligence', 'Eventstream', 'Eventhouse', 'KQL', 'Activator', 'Power BI'],
+    githubUrl: 'https://github.com/ziaul-akash/your-project-link',
+    architectureCaption: 'Fabric Real-Time Intelligence Architecture with Eventstream and KQL',
+    dataIngestion: 'Fabric Eventstream ingestion from Azure Event Hubs streaming endpoints.',
+    transformationAndProcessing: 'Streaming transformations and aggregations performed in-flight.',
+    storageAndDataModelling: 'Eventhouse KQL database optimized for time-series append-only telemetry.',
+    dataOrchestration: 'Native Real-Time Hub continuous ingestion.',
+    securityAndGovernance: 'Fabric workspace RBAC and Microsoft Entra ID authentication.',
+    analyticsAndImpact: 'Real-Time Power BI dashboards refreshing continuously with KQL direct queries.'
+  }
+  ======================================================================== */
+];
+
+src/data/skillsData.ts
+
+import { SkillCategory } from '../types';
+
+export const skillsCategories: SkillCategory[] = [
+  {
+    categoryNumber: 1,
+    title: 'Microsoft Fabric',
+    description: 'SaaS Lakehouse, unified data architecture, and modern collaborative data engineering.',
+    skills: [
+      'OneLake',
+      'Lakehouse',
+      'Data Warehouse',
+      'Data Factory',
+      'Data Pipelines',
+      'Dataflows Gen2',
+      'Fabric Notebooks',
+      'Spark',
+      'Shortcuts',
+      'Database Mirroring',
+      'Monitoring Hub'
+    ]
+  },
+  {
+    categoryNumber: 2,
+    title: 'Fabric Real-Time Intelligence',
+    description: 'High-velocity streaming data, time-series analysis, and event-driven automation.',
+    skills: [
+      'Eventhouse',
+      'Eventstream',
+      'Real-Time Hub',
+      'KQL',
+      'Activator',
+      'Real-Time Analytics',
+      'Event Processing'
+    ]
+  },
+  {
+    categoryNumber: 3,
+    title: 'Azure Data Services',
+    description: 'Enterprise Microsoft cloud data platform infrastructure and managed analytics services.',
+    skills: [
+      'Azure Data Factory',
+      'Azure Databricks',
+      'Azure Synapse Analytics',
+      'Azure Data Lake Storage Gen2',
+      'Azure SQL',
+      'Azure Blob Storage'
+    ]
+  },
+  {
+    categoryNumber: 4,
+    title: 'Big Data & Processing',
+    description: 'Distributed computing, robust lakehouse file formats, and high-volume data transformation.',
+    skills: [
+      'Apache Spark',
+      'PySpark',
+      'Delta Lake',
+      'Batch Processing',
+      'Real-Time Data Processing',
+      'Apache Kafka (Basic)'
+    ]
+  },
+  {
+    categoryNumber: 5,
+    title: 'Programming & Query Languages',
+    description: 'Core engineering languages for data manipulation, analytics, and pipeline scripting.',
+    skills: [
+      'Python',
+      'Pandas',
+      'SQL',
+      'T-SQL',
+      'Spark SQL',
+      'KQL'
+    ]
+  },
+  {
+    categoryNumber: 6,
+    title: 'Data Architecture',
+    description: 'Architectural patterns, scalable data modeling, and enterprise data lifecycle designs.',
+    skills: [
+      'ETL / ELT',
+      'Data Integration',
+      'Data Ingestion',
+      'Data Transformation',
+      'Data Cleansing',
+      'Data Warehousing',
+      'Data Lakehouse',
+      'Medallion Architecture',
+      'Incremental Processing',
+      'SCD Type 2'
+    ]
+  },
+  {
+    categoryNumber: 7,
+    title: 'Analytics & BI',
+    description: 'Business intelligence semantic modeling, direct query interfaces, and executive visualization.',
+    skills: [
+      'Power BI',
+      'Semantic Models',
+      'Direct Lake',
+      'DAX',
+      'Data Modelling',
+      'Reports and Dashboards'
+    ]
+  },
+  {
+    categoryNumber: 8,
+    title: 'DevOps, Governance & Security',
+    description: 'Continuous integration, enterprise identity, automated deployments, and access controls.',
+    skills: [
+      'Azure DevOps',
+      'CI/CD Pipelines',
+      'Git',
+      'GitHub',
+      'Microsoft Entra ID',
+      'Azure Key Vault',
+      'Data Governance',
+      'Access Control'
+    ]
+  },
+  {
+    categoryNumber: 9,
+    title: 'Additional Technologies',
+    description: 'Ecosystem messaging, modern cloud platforms, containerization, and automation tools.',
+    skills: [
+      'Snowflake (Basic)',
+      'Docker (Basic)',
+      'Azure Event Hubs',
+      'Azure IoT Hub',
+      'Stream Analytics',
+      'Logic Apps'
+    ]
+  }
+];
+
+src/data/experienceData.ts
+
+import { ExperienceItem } from '../types';
+
+export const professionalExperience: ExperienceItem[] = [
+  {
+    id: 'exp-1',
+    role: 'Learning Resource Centre Officer',
+    organization: 'Capital City College',
+    period: 'August 2024 – Present',
+    location: 'London Area, United Kingdom',
+    type: 'Employment',
+    responsibilities: [
+      'Currently working at the intersection of technology operations, digital support and AI enablement.',
+      'Providing frontline IT and technology support to students and staff while helping improve digital literacy across the organisation.',
+      'Design and deliver training sessions on AI tools and eResources, translating complex technology into practical knowledge that users can apply.',
+      'Developing a strong understanding of business requirements, user experience, technology adoption and practical problem-solving.'
+    ],
+    skillsApplied: ['AI Enablement', 'Technology Support', 'Digital Literacy', 'Stakeholder Training', 'Operations']
+  },
+  {
+    id: 'exp-2',
+    role: 'Customer Service Representative',
+    organization: 'Babylon Park UK',
+    period: 'February 2023 – July 2024',
+    location: 'Camden Town, England, United Kingdom',
+    type: 'Employment',
+    responsibilities: [
+      'Delivered customer service in a fast-paced indoor theme park environment, supporting visitors, handling enquiries and resolving customer issues.',
+      'Maintained operational standards, represented the organisation professionally, operated attractions safely and supported retail transactions.'
+    ],
+    skillsApplied: ['Operational Excellence', 'Customer Communication', 'Issue Resolution', 'Fast-paced Collaboration']
+  },
+  {
+    id: 'exp-3',
+    role: 'Web Developer',
+    organization: 'Systech Unimax',
+    period: 'September 2020 – December 2022',
+    location: 'Dhaka, Bangladesh',
+    type: 'Employment',
+    responsibilities: [
+      'Managed end-to-end website development across different platforms.',
+      'Improved website functionality, usability and responsiveness.',
+      'Built and integrated custom WordPress themes.'
+    ],
+    skillsApplied: ['Web Development', 'UI/UX Responsiveness', 'WordPress Customization', 'Frontend Engineering']
+  }
+];
+
+export const educationData = {
+  degree: 'Bachelor of Science in Computer Science',
+  institution: 'Daffodil International University',
+  period: 'September 2015 – January 2019',
+  grade: '3.62 / 4.00'
+};
+
+export const languagesData = [
+  { language: 'Bengali', level: 'Native or bilingual proficiency' },
+  { language: 'English', level: 'Professional working proficiency' },
+  { language: 'Hindi', level: 'Professional working proficiency' },
+  { language: 'Urdu', level: 'Professional working proficiency' }
+];
+
+src/data/certificationsData.ts
+
+import { CertificationItem } from '../types';
+
+export const certificationsData: CertificationItem[] = [
+  {
+    id: 'cert-1',
+    title: 'Microsoft Certified: Fabric Data Engineer Associate',
+    issuer: 'Microsoft',
+    issueDate: 'October 2026',
+    expiryDate: 'October 2027',
+    credentialId: 'EFDD556234ADDC6F'
+  },
+  {
+    id: 'cert-2',
+    title: 'Master Microsoft Fabric: A Complete End-to-End Project – CI/CD',
+    issuer: 'Udemy',
+    issueDate: 'August 2026',
+    credentialId: 'UC-333f4128-3336-448c-bdf9-41705b77395a'
+  },
+  {
+    id: 'cert-3',
+    title: 'Microsoft: Fabric Analyst in a Day',
+    issuer: 'MAQSoftware',
+    issueDate: 'Sep 28, 2026'
+  },
+  {
+    id: 'cert-4',
+    title: 'Azure Databricks and Spark SQL (Python)',
+    issuer: 'Udemy',
+    issueDate: 'February 2026',
+    credentialId: 'UC-6dabc83b-bea6-4486-96f2-3c8c177d482b'
+  },
+  {
+    id: 'cert-5',
+    title: 'Azure Data Factory for Data Engineers – Project on COVID-19',
+    issuer: 'Udemy',
+    issueDate: 'March 2026',
+    credentialId: 'UC-73f65e56-e0cd-4fed-8b1c-e7b8c3a809db'
+  },
+  {
+    id: 'cert-6',
+    title: 'Professional Web Design and Development',
+    issuer: 'BASIS Institute of Technology & Management Limited (BITM)',
+    issueDate: 'April 2017'
+  }
+];
+
+3. Theme Engine
+
+src/context/ThemeContext.tsx
+
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { ThemeMode } from '../types';
+
+interface ThemeContextType {
+  mode: ThemeMode;
+  effectiveTheme: 'dark' | 'light';
+  setThemeMode: (mode: ThemeMode) => void;
+}
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [mode, setMode] = useState<ThemeMode>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('theme_preference') as ThemeMode;
+      if (saved && ['dark', 'light', 'system'].includes(saved)) {
+        return saved;
+      }
+    }
+    return 'dark'; // Dark theme default aesthetic per spec
+  });
+
+  const [effectiveTheme, setEffectiveTheme] = useState<'dark' | 'light'>('dark');
+
+  useEffect(() => {
+    const updateEffectiveTheme = () => {
+      let resolved: 'dark' | 'light' = 'dark';
+      if (mode === 'system') {
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        resolved = systemPrefersDark ? 'dark' : 'light';
+      } else {
+        resolved = mode;
+      }
+
+      setEffectiveTheme(resolved);
+
+      const root = document.documentElement;
+      if (resolved === 'dark') {
+        root.classList.add('dark');
+        root.classList.remove('light');
+      } else {
+        root.classList.remove('dark');
+        root.classList.add('light');
+      }
+    };
+
+    updateEffectiveTheme();
+    localStorage.setItem('theme_preference', mode);
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleMediaChange = () => {
+      if (mode === 'system') updateEffectiveTheme();
+    };
+
+    mediaQuery.addEventListener('change', handleMediaChange);
+    return () => mediaQuery.removeEventListener('change', handleMediaChange);
+  }, [mode]);
+
+  return (
+    <ThemeContext.Provider value={{ mode, effectiveTheme, setThemeMode: setMode }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+export const useTheme = () => {
+  const ctx = useContext(ThemeContext);
+  if (!ctx) throw new Error('useTheme must be used within ThemeProvider');
+  return ctx;
+};
+
+4. Interactive Components & Layout
+
+src/components/Navbar.tsx
+
+import React, { useState, useEffect } from 'react';
+import { siteConfig } from '../config/siteConfig';
+import { useTheme } from '../context/ThemeContext';
+import { 
+  Sun, 
+  Moon, 
+  Monitor, 
+  Linkedin, 
+  Menu, 
+  X, 
+  ChevronDown, 
+  ExternalLink 
+} from 'lucide-react';
+import { ThemeMode } from '../types';
+
+export const Navbar: React.FC = () => {
+  const { mode, setThemeMode } = useTheme();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [themeDropdownOpen, setThemeDropdownOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+
+  const navItems = [
+    { label: 'Home', href: '#home' },
+    { label: 'About', href: '#about' },
+    { label: 'Skills', href: '#skills' },
+    { label: 'Experience', href: '#experience' },
+    { label: 'Projects', href: '#projects' },
+    { label: 'Certifications', href: '#certifications' },
+    { label: 'Contact', href: '#contact' }
+  ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+
+      // Determine active section based on scroll offset
+      const sections = navItems.map((item) => item.href.substring(1));
+      const scrollPosition = window.scrollY + 120;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i]);
+        if (el && el.offsetTop <= scrollPosition) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleNavClick = (href: string) => {
+    setMobileMenuOpen(false);
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const themeOptions: { mode: ThemeMode; label: string; icon: React.ReactNode }[] = [
+    { mode: 'dark', label: 'Dark', icon: <Moon className="w-4 h-4" /> },
+    { mode: 'light', label: 'Light', icon: <Sun className="w-4 h-4" /> },
+    { mode: 'system', label: 'System', icon: <Monitor className="w-4 h-4" /> }
+  ];
+
+  return (
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? 'bg-[#080D18]/90 dark:bg-[#080D18]/90 bg-white/90 backdrop-blur-md border-b border-[#263449]/80 dark:border-[#263449]/80 border-slate-200 shadow-lg'
+          : 'bg-transparent'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          {/* Brand */}
+          <a
+            href="#home"
+            className="flex items-center gap-2 group focus:outline-none"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick('#home');
+            }}
+          >
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-mono font-bold text-sm shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+              ZH
+            </div>
+            <span className="font-bold tracking-wider text-base sm:text-lg text-slate-900 dark:text-[#F8FAFC]">
+              {siteConfig.brandName}
+            </span>
+          </a>
+
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center space-x-1">
+            {navItems.map((item) => {
+              const isActive = activeSection === item.href.substring(1);
+              return (
+                <button
+                  key={item.label}
+                  onClick={() => handleNavClick(item.href)}
+                  className={`px-3.5 py-2 text-sm font-medium rounded-md transition-colors relative ${
+                    isActive
+                      ? 'text-cyan-500 dark:text-[#38BDF8] font-semibold'
+                      : 'text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F8FAFC]'
+                  }`}
+                >
+                  {item.label}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full" />
+                  )}
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Right Action Icons & Theme Switcher */}
+          <div className="hidden md:flex items-center space-x-4">
+            {/* Theme Selector Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setThemeDropdownOpen(!themeDropdownOpen)}
+                className="flex items-center gap-1.5 p-2 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#141F30] border border-transparent hover:border-slate-300 dark:hover:border-[#263449] transition-all text-xs"
+                title="Select Theme"
+                aria-label="Theme selector"
+              >
+                {mode === 'dark' && <Moon className="w-4 h-4 text-cyan-400" />}
+                {mode === 'light' && <Sun className="w-4 h-4 text-amber-500" />}
+                {mode === 'system' && <Monitor className="w-4 h-4 text-blue-400" />}
+                <ChevronDown className="w-3.5 h-3.5 opacity-70" />
+              </button>
+
+              {themeDropdownOpen && (
+                <div
+                  className="absolute right-0 mt-2 w-36 py-1.5 rounded-lg shadow-xl bg-white dark:bg-[#141F30] border border-slate-200 dark:border-[#263449] z-50 text-xs"
+                  onMouseLeave={() => setThemeDropdownOpen(false)}
+                >
+                  {themeOptions.map((opt) => (
+                    <button
+                      key={opt.mode}
+                      onClick={() => {
+                        setThemeMode(opt.mode);
+                        setThemeDropdownOpen(false);
+                      }}
+                      className={`w-full flex items-center gap-2.5 px-3 py-2 text-left transition-colors ${
+                        mode === opt.mode
+                          ? 'text-cyan-600 dark:text-[#38BDF8] bg-slate-50 dark:bg-[#101827] font-semibold'
+                          : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#101827]/60'
+                      }`}
+                    >
+                      {opt.icon}
+                      <span>{opt.label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* LinkedIn Icon */}
+            <a
+              href={siteConfig.links.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn Profile"
+              className="p-2 text-slate-600 dark:text-[#94A3B8] hover:text-cyan-500 dark:hover:text-[#38BDF8] transition-colors"
+            >
+              <Linkedin className="w-4 h-4" />
+            </a>
+
+            {/* Let's Connect CTA Button */}
+            <button
+              onClick={() => handleNavClick('#contact')}
+              className="inline-flex items-center justify-center px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 shadow-sm shadow-cyan-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Let&apos;s Connect
+            </button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="flex md:hidden items-center space-x-2">
+            {/* Quick theme cycle for mobile */}
+            <button
+              onClick={() => {
+                const nextMode: ThemeMode = mode === 'dark' ? 'light' : mode === 'light' ? 'system' : 'dark';
+                setThemeMode(nextMode);
+              }}
+              className="p-2 rounded-lg text-slate-600 dark:text-[#94A3B8]"
+              aria-label="Toggle Theme"
+            >
+              {mode === 'dark' ? <Moon className="w-5 h-5 text-cyan-400" /> : <Sun className="w-5 h-5 text-amber-500" />}
+            </button>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white"
+              aria-label="Open Navigation Menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white dark:bg-[#101827] border-b border-slate-200 dark:border-[#263449] px-4 pt-2 pb-6 space-y-2 shadow-2xl">
+          {navItems.map((item) => (
+            <button
+              key={item.label}
+              onClick={() => handleNavClick(item.href)}
+              className="w-full text-left px-3 py-2.5 rounded-md text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#141F30]"
+            >
+              {item.label}
+            </button>
+          ))}
+          <div className="pt-4 border-t border-slate-200 dark:border-[#263449] flex flex-col gap-3">
+            <a
+              href={siteConfig.links.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-2 text-sm text-slate-700 dark:text-slate-200"
+            >
+              <Linkedin className="w-4 h-4 text-cyan-500" />
+              <span>LinkedIn Profile</span>
+              <ExternalLink className="w-3.5 h-3.5 ml-auto opacity-60" />
+            </a>
+            <button
+              onClick={() => handleNavClick('#contact')}
+              className="w-full py-2.5 text-center text-sm font-semibold rounded-lg text-white bg-gradient-to-r from-cyan-500 to-blue-600"
+            >
+              Let&apos;s Connect
+            </button>
+          </div>
+        </div>
+      )}
+    </header>
+  );
+};
+
+src/components/DataFlowVisual.tsx
+
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Database, Layers, Cpu, Sparkles, Workflow, ArrowRight } from 'lucide-react';
+
+export const DataFlowVisual: React.FC = () => {
+  return (
+    <div className="relative w-full h-[460px] flex items-center justify-center select-none overflow-hidden rounded-2xl border border-slate-200 dark:border-[#263449] bg-gradient-to-b from-white via-slate-50 to-white dark:from-[#101827] dark:via-[#0c1422] dark:to-[#101827] p-6 shadow-2xl">
+      {/* Subtle background glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-500/10 via-transparent to-transparent pointer-events-none" />
+
+      {/* Grid Pattern */}
+      <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.06] bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:16px_16px]" />
+
+      <div className="relative z-10 w-full max-w-md flex flex-col gap-5">
+        {/* Layer 1: Ingestion Sources */}
+        <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-mono">
+          <span className="flex items-center gap-1.5 text-cyan-600 dark:text-cyan-400 font-semibold">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+            STREAM & BATCH INGESTION
+          </span>
+          <span className="text-[11px] uppercase tracking-wider text-slate-400">OneLake Fabric Engine</span>
+        </div>
+
+        {/* Medallion Architecture Visual Cards */}
+        <div className="grid grid-cols-3 gap-3">
+          {/* Bronze Tier */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="flex flex-col p-3.5 rounded-xl border border-amber-500/30 bg-amber-500/5 dark:bg-[#141F30]/80 shadow-sm"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[10px] font-mono uppercase tracking-widest font-bold text-amber-500">Bronze</span>
+              <Database className="w-3.5 h-3.5 text-amber-500" />
+            </div>
+            <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">Raw Layer</p>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Append-only Ingestion</p>
+          </motion.div>
+
+          {/* Silver Tier */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex flex-col p-3.5 rounded-xl border border-cyan-500/40 bg-cyan-500/5 dark:bg-[#141F30]/80 shadow-sm relative overflow-hidden"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[10px] font-mono uppercase tracking-widest font-bold text-cyan-400">Silver</span>
+              <Layers className="w-3.5 h-3.5 text-cyan-400" />
+            </div>
+            <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">Cleansed</p>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">PySpark / Delta Lake</p>
+          </motion.div>
+
+          {/* Gold Tier */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex flex-col p-3.5 rounded-xl border border-emerald-500/40 bg-emerald-500/5 dark:bg-[#141F30]/80 shadow-sm"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[10px] font-mono uppercase tracking-widest font-bold text-emerald-400">Gold</span>
+              <Cpu className="w-3.5 h-3.5 text-emerald-400" />
+            </div>
+            <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">Curated</p>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Direct Lake / Star Schema</p>
+          </motion.div>
+        </div>
+
+        {/* Animated Pipeline Nodes */}
+        <div className="p-4 rounded-xl border border-slate-200 dark:border-[#263449] bg-white/50 dark:bg-[#141F30]/40 backdrop-blur-sm space-y-3">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+              <Workflow className="w-4 h-4 text-cyan-500" />
+              Lakehouse Ingestion Pipeline
+            </span>
+            <span className="text-[11px] font-mono text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+              Active • CI/CD
+            </span>
+          </div>
+
+          <div className="h-1.5 w-full bg-slate-200 dark:bg-[#263449] rounded-full overflow-hidden relative">
+            <motion.div
+              className="absolute top-0 bottom-0 left-0 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 rounded-full"
+              initial={{ width: '0%' }}
+              animate={{ width: '100%' }}
+              transition={{ repeat: Infinity, duration: 3.2, ease: 'easeInOut' }}
+            />
+          </div>
+
+          <div className="grid grid-cols-3 text-[10px] font-mono text-slate-400 text-center">
+            <span>Data Factory</span>
+            <span>Databricks / Fabric</span>
+            <span>Power BI & AI Agents</span>
+          </div>
+        </div>
+
+        {/* AI & Intelligence Layer Feature */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="flex items-center justify-between p-3 rounded-lg border border-cyan-500/30 bg-gradient-to-r from-cyan-500/10 via-blue-500/5 to-transparent text-xs"
+        >
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-md bg-cyan-500/20 text-cyan-400 flex items-center justify-center">
+              <Sparkles className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="font-semibold text-slate-800 dark:text-slate-200">AI Data Agent Integration</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">Natural Language ↔ Lakehouse Direct Access</p>
+            </div>
+          </div>
+          <ArrowRight className="w-4 h-4 text-cyan-400" />
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+src/components/Hero.tsx
+
+import React from 'react';
+import { siteConfig } from '../config/siteConfig';
+import { DataFlowVisual } from './DataFlowVisual';
+import { ArrowDown, Download, Linkedin, ExternalLink } from 'lucide-react';
+
+export const Hero: React.FC = () => {
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <section id="home" className="relative min-h-[92vh] flex items-center justify-center pt-24 pb-16 overflow-hidden">
+      {/* Decorative ambient background glows */}
+      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          {/* Left Column: Positioning & Headings */}
+          <div className="lg:col-span-7 space-y-6 text-left">
+            {/* Small introductory label */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-600 dark:text-[#38BDF8] text-xs font-mono font-semibold tracking-wider uppercase">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+              HELLO, I&apos;M ZIAUL HAQ AKASH
+            </div>
+
+            {/* Main Heading */}
+            <h1 className="text-4xl sm:text-5xl xl:text-6xl font-black tracking-tight text-slate-900 dark:text-[#F8FAFC] leading-[1.12]">
+              Engineering Data.{' '}
+              <span className="bg-gradient-to-r from-cyan-500 via-sky-400 to-blue-500 bg-clip-text text-transparent">
+                Building Intelligence.
+              </span>{' '}
+              Enabling Better Decisions.
+            </h1>
+
+            {/* Professional Title */}
+            <p className="text-base sm:text-lg font-mono font-semibold text-cyan-600 dark:text-[#38BDF8]">
+              {siteConfig.title}
+            </p>
+
+            {/* Introduction */}
+            <p className="text-base sm:text-lg text-slate-600 dark:text-[#94A3B8] leading-relaxed max-w-2xl">
+              I design and build scalable data engineering solutions, modern lakehouse architectures, and automated data pipelines using Microsoft Azure and Fabric. Passionate about transforming complex data into reliable, analytics-ready insights and intelligent business solutions.
+            </p>
+
+            {/* CTAs */}
+            <div className="pt-2 flex flex-wrap items-center gap-4">
+              <button
+                onClick={() => scrollTo('projects')}
+                className="inline-flex items-center justify-center px-6 py-3.5 text-sm font-semibold rounded-lg text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 shadow-md shadow-cyan-500/20 transition-all hover:scale-105"
+              >
+                Explore My Projects
+              </button>
+
+              <button
+                onClick={() => scrollTo('contact')}
+                className="inline-flex items-center justify-center px-6 py-3.5 text-sm font-semibold rounded-lg text-slate-800 dark:text-[#F8FAFC] bg-slate-100 dark:bg-[#141F30] border border-slate-300 dark:border-[#263449] hover:border-cyan-500/50 hover:bg-slate-200 dark:hover:bg-[#101827] transition-all"
+              >
+                Let&apos;s Connect
+              </button>
+
+              {/* Download CV - Configurable */}
+              <a
+                href={siteConfig.links.cvDownloadPath}
+                download={siteConfig.links.cvFilename}
+                className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-semibold rounded-lg text-slate-700 dark:text-[#94A3B8] hover:text-cyan-500 dark:hover:text-[#38BDF8] border border-transparent hover:border-slate-300 dark:hover:border-[#263449] transition-all"
+                title="Download CV"
+              >
+                <Download className="w-4 h-4" />
+                <span>Download CV</span>
+              </a>
+            </div>
+
+            {/* Quick links & social verification */}
+            <div className="pt-4 flex items-center gap-6 text-sm text-slate-500 dark:text-[#94A3B8] border-t border-slate-200 dark:border-[#263449]/60">
+              <span className="font-mono text-xs uppercase tracking-wider">Connect:</span>
+              <a
+                href={siteConfig.links.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 hover:text-cyan-500 dark:hover:text-[#38BDF8] transition-colors"
+              >
+                <Linkedin className="w-4 h-4" />
+                <span>LinkedIn</span>
+                <ExternalLink className="w-3 h-3 opacity-60" />
+              </a>
+              <button
+                onClick={() => scrollTo('projects')}
+                className="inline-flex items-center gap-1.5 hover:text-cyan-500 dark:hover:text-[#38BDF8] transition-colors"
+              >
+                <span>Featured Repositories (3)</span>
+                <ArrowDown className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Right Column: Abstract Lakehouse & Dataflow Visual */}
+          <div className="lg:col-span-5">
+            <DataFlowVisual />
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
+src/components/About.tsx
+
+import React from 'react';
+import { siteConfig } from '../config/siteConfig';
+import { educationData, languagesData } from '../data/experienceData';
+import { CheckCircle2, GraduationCap, Globe, Award } from 'lucide-react';
+
+export const About: React.FC = () => {
+  return (
+    <section id="about" className="py-24 bg-slate-50 dark:bg-[#101827] border-y border-slate-200 dark:border-[#263449]/70 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Heading */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <p className="text-xs font-mono font-semibold uppercase tracking-widest text-cyan-600 dark:text-[#38BDF8] mb-2">
+            Professional Overview
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-[#F8FAFC]">
+            Turning Data Into Business Intelligence
+          </h2>
+          <div className="mt-3 w-16 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto rounded-full" />
+        </div>
+
+        {/* Content Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          {/* Summary Text (Verbatim as required) */}
+          <div className="lg:col-span-7 space-y-6 text-slate-700 dark:text-[#94A3B8] leading-relaxed text-base sm:text-lg">
+            <p>
+              I am a Microsoft Fabric and Azure Data Engineer focused on designing scalable data platforms, automating data pipelines, and transforming complex datasets into meaningful business insights.
+            </p>
+            <p>
+              With hands-on experience across Microsoft Fabric, Azure Databricks, Azure Data Factory, PySpark, Delta Lake, and Power BI, I build end-to-end data engineering solutions using modern lakehouse architectures, Medallion Architecture, incremental data processing, and CI/CD automation.
+            </p>
+            <p>
+              My work also explores the intersection of data engineering and AI, including conversational data agents that enable business users to interact with enterprise data using natural language.
+            </p>
+            <p>
+              Alongside my technical projects, my professional experience in technology support and digital enablement has strengthened my ability to understand business requirements and translate technical solutions into practical outcomes.
+            </p>
+            <p className="font-medium text-slate-900 dark:text-[#F8FAFC]">
+              My focus is building reliable, scalable, secure, and AI-ready data platforms that empower organisations to make better decisions.
+            </p>
+
+            {/* Professional Focus Areas */}
+            <div className="pt-4">
+              <h3 className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 font-semibold">
+                Core Professional Focus Areas
+              </h3>
+              <div className="flex flex-wrap gap-2.5">
+                {siteConfig.focusAreas.map((area) => (
+                  <span
+                    key={area}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium border border-cyan-500/30 bg-cyan-500/5 dark:bg-[#141F30] text-cyan-600 dark:text-[#38BDF8]"
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" />
+                    {area}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Education & Language Sidebar */}
+          <div className="lg:col-span-5 space-y-6">
+            {/* Education Card */}
+            <div className="p-6 rounded-2xl border border-slate-200 dark:border-[#263449] bg-white dark:bg-[#141F30] shadow-sm">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-500 dark:text-[#38BDF8] flex items-center justify-center">
+                  <GraduationCap className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-[#F8FAFC]">
+                    {educationData.degree}
+                  </h3>
+                  <p className="text-sm text-cyan-600 dark:text-[#38BDF8] font-medium">
+                    {educationData.institution}
+                  </p>
+                </div>
+              </div>
+              <div className="space-y-1.5 pt-2 border-t border-slate-100 dark:border-[#263449]/60 text-xs text-slate-600 dark:text-[#94A3B8]">
+                <div className="flex justify-between">
+                  <span>Timeline:</span>
+                  <span className="font-mono font-medium text-slate-800 dark:text-slate-200">{educationData.period}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Academic Standing:</span>
+                  <span className="font-mono font-semibold text-emerald-600 dark:text-emerald-400">
+                    Grade {educationData.grade}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Languages Card */}
+            <div className="p-6 rounded-2xl border border-slate-200 dark:border-[#263449] bg-white dark:bg-[#141F30] shadow-sm">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 dark:text-blue-400 flex items-center justify-center">
+                  <Globe className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-[#F8FAFC]">
+                    Language Proficiencies
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-[#94A3B8]">
+                    Global communication & collaboration
+                  </p>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                {languagesData.map((lang) => (
+                  <div
+                    key={lang.language}
+                    className="p-3 rounded-xl border border-slate-100 dark:border-[#263449] bg-slate-50/50 dark:bg-[#101827]/60"
+                  >
+                    <p className="text-sm font-semibold text-slate-900 dark:text-[#F8FAFC]">
+                      {lang.language}
+                    </p>
+                    <p className="text-[11px] text-slate-500 dark:text-[#94A3B8] mt-0.5">
+                      {lang.level}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Direct Microsoft Certification Badge Callout */}
+            <div className="p-5 rounded-2xl border border-cyan-500/30 bg-gradient-to-br from-cyan-500/10 via-transparent to-blue-500/5 flex items-center gap-4">
+              <div className="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-500 dark:text-[#38BDF8] flex items-center justify-center shrink-0">
+                <Award className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-xs font-mono uppercase tracking-wider text-cyan-600 dark:text-[#38BDF8] font-bold">
+                  Verified Microsoft Credential
+                </p>
+                <p className="text-sm font-bold text-slate-900 dark:text-[#F8FAFC]">
+                  Fabric Data Engineer Associate (DP-600)
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
+src/components/Skills.tsx
+
+import React, { useState } from 'react';
+import { skillsCategories } from '../data/skillsData';
+import { 
+  Cloud, 
+  Database, 
+  Workflow, 
+  Code2, 
+  BarChart3, 
+  ShieldCheck, 
+  Layers, 
+  Cpu, 
+  Radio 
+} from 'lucide-react';
+
+export const Skills: React.FC = () => {
+  const [filterText, setFilterText] = useState('');
+
+  // Icon mapping for each numbered category
+  const getCategoryIcon = (categoryNumber: number) => {
+    switch (categoryNumber) {
+      case 1: return <Cloud className="w-5 h-5 text-cyan-400" />;
+      case 2: return <Radio className="w-5 h-5 text-sky-400" />;
+      case 3: return <Layers className="w-5 h-5 text-blue-400" />;
+      case 4: return <Cpu className="w-5 h-5 text-indigo-400" />;
+      case 5: return <Code2 className="w-5 h-5 text-emerald-400" />;
+      case 6: return <Database className="w-5 h-5 text-amber-400" />;
+      case 7: return <BarChart3 className="w-5 h-5 text-cyan-300" />;
+      case 8: return <ShieldCheck className="w-5 h-5 text-purple-400" />;
+      case 9: return <Workflow className="w-5 h-5 text-teal-400" />;
+      default: return <Cloud className="w-5 h-5 text-cyan-400" />;
+    }
+  };
+
+  const filteredCategories = skillsCategories.map((cat) => {
+    if (!filterText.trim()) return cat;
+    const matchingSkills = cat.skills.filter((s) =>
+      s.toLowerCase().includes(filterText.toLowerCase())
+    );
+    return {
+      ...cat,
+      skills: matchingSkills
+    };
+  }).filter((cat) => cat.skills.length > 0);
+
+  return (
+    <section id="skills" className="py-24 bg-white dark:bg-[#080D18] relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Heading */}
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <p className="text-xs font-mono font-semibold uppercase tracking-widest text-cyan-600 dark:text-[#38BDF8] mb-2">
+            Technical Stack & Ecosystem
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-[#F8FAFC]">
+            End-to-End Data Engineering Competencies
+          </h2>
+          <p className="text-sm text-slate-600 dark:text-[#94A3B8] mt-3">
+            Organised by cloud data architecture domains. Real-world technologies applied across production pipelines.
+          </p>
+          <div className="mt-3 w-16 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto rounded-full" />
+        </div>
+
+        {/* Live Search Filter */}
+        <div className="max-w-md mx-auto mb-12">
+          <input
+            type="text"
+            placeholder="Search technology (e.g. PySpark, OneLake, Delta, KQL)..."
+            value={filterText}
+            onChange={(e) => setFilterText(e.target.value)}
+            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-[#263449] bg-slate-50 dark:bg-[#141F30] text-slate-900 dark:text-[#F8FAFC] focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-slate-400 transition-all"
+          />
+        </div>
+
+        {/* 9 Categories Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredCategories.map((cat) => (
+            <div
+              key={cat.categoryNumber}
+              className="group p-6 rounded-2xl border border-slate-200 dark:border-[#263449] bg-slate-50/50 dark:bg-[#141F30] hover:border-cyan-500/40 transition-all duration-300 hover:shadow-lg dark:hover:shadow-cyan-900/10 flex flex-col justify-between"
+            >
+              <div>
+                {/* Header */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-slate-200/60 dark:bg-[#101827] flex items-center justify-center border border-slate-300/40 dark:border-[#263449]">
+                    {getCategoryIcon(cat.categoryNumber)}
+                  </div>
+                  <span className="text-xs font-mono text-slate-400">
+                    CAT 0{cat.categoryNumber}
+                  </span>
+                </div>
+
+                <h3 className="text-base font-bold text-slate-900 dark:text-[#F8FAFC] mb-1">
+                  {cat.title}
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-[#94A3B8] mb-4 line-clamp-2">
+                  {cat.description}
+                </p>
+
+                {/* Skill Badges */}
+                <div className="flex flex-wrap gap-2">
+                  {cat.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-2.5 py-1 text-xs rounded-md font-medium border border-slate-200 dark:border-[#263449] bg-white dark:bg-[#101827] text-slate-800 dark:text-slate-200 group-hover:border-cyan-500/30 transition-colors"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+src/components/Experience.tsx
+
+import React from 'react';
+import { professionalExperience } from '../data/experienceData';
+import { Briefcase, MapPin, Calendar, CheckCircle } from 'lucide-react';
+
+export const Experience: React.FC = () => {
+  return (
+    <section id="experience" className="py-24 bg-slate-50 dark:bg-[#101827] border-y border-slate-200 dark:border-[#263449]/70 relative">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Heading */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <p className="text-xs font-mono font-semibold uppercase tracking-widest text-cyan-600 dark:text-[#38BDF8] mb-2">
+            Career Journey
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-[#F8FAFC]">
+            Professional Experience
+          </h2>
+          <p className="text-sm text-slate-600 dark:text-[#94A3B8] mt-3">
+            Professional track record in technology operations, digital enablement, and web engineering.
+          </p>
+          <div className="mt-3 w-16 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto rounded-full" />
+        </div>
+
+        {/* Note distinguishing independent data projects */}
+        <div className="mb-10 p-4 rounded-xl border border-cyan-500/20 bg-cyan-500/5 dark:bg-[#141F30]/60 text-xs text-slate-600 dark:text-[#94A3B8] text-center">
+          <span className="font-semibold text-cyan-600 dark:text-[#38BDF8]">Note on Career Structure:</span> The positions below reflect professional corporate and institutional employment roles. End-to-end cloud and Microsoft Fabric data engineering solutions are featured in the dedicated <a href="#projects" className="underline text-cyan-500 font-medium">Projects section</a>.
+        </div>
+
+        {/* Timeline */}
+        <div className="relative border-l-2 border-slate-200 dark:border-[#263449] ml-4 sm:ml-8 space-y-12">
+          {professionalExperience.map((item, index) => (
+            <div key={item.id} className="relative pl-6 sm:pl-10">
+              
+              {/* Timeline Indicator Node */}
+              <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-cyan-500 border-4 border-white dark:border-[#101827] shadow-sm" />
+
+              {/* Experience Card */}
+              <div className="p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-[#263449] bg-white dark:bg-[#141F30] shadow-sm hover:border-cyan-500/40 transition-all">
+                
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+                  <div>
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-cyan-600 dark:text-[#38BDF8]">
+                      POSITION 0{index + 1}
+                    </span>
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-[#F8FAFC]">
+                      {item.role}
+                    </h3>
+                    <p className="text-base font-semibold text-slate-700 dark:text-slate-300">
+                      {item.organization}
+                    </p>
+                  </div>
+
+                  <div className="text-xs font-mono text-slate-500 dark:text-[#94A3B8] space-y-1 sm:text-right">
+                    <div className="inline-flex items-center gap-1.5 bg-slate-100 dark:bg-[#101827] px-2.5 py-1 rounded-md border border-slate-200 dark:border-[#263449]">
+                      <Calendar className="w-3.5 h-3.5 text-cyan-500" />
+                      <span>{item.period}</span>
+                    </div>
+                    <div className="flex items-center gap-1 sm:justify-end">
+                      <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                      <span>{item.location}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bullet Points */}
+                <div className="space-y-2.5 mt-4 text-sm text-slate-600 dark:text-[#94A3B8] leading-relaxed">
+                  {item.responsibilities.map((resp, i) => (
+                    <div key={i} className="flex items-start gap-2.5">
+                      <CheckCircle className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
+                      <span>{resp}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Skills Applied Tags */}
+                {item.skillsApplied && (
+                  <div className="mt-5 pt-4 border-t border-slate-100 dark:border-[#263449]/60 flex flex-wrap gap-2">
+                    {item.skillsApplied.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[11px] font-mono px-2 py-0.5 rounded border border-slate-200 dark:border-[#263449] bg-slate-50 dark:bg-[#101827] text-slate-600 dark:text-slate-400"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+src/components/ArchitecturePlaceholder.tsx
+
+import React from 'react';
+import { Layers, Image as ImageIcon, ZoomIn } from 'lucide-react';
+
+interface ArchitecturePlaceholderProps {
+  title: string;
+  caption: string;
+  imageSrc?: string;
+  onOpenLightbox?: (src: string, caption: string) => void;
+}
+
+export const ArchitecturePlaceholder: React.FC<ArchitecturePlaceholderProps> = ({
+  title,
+  caption,
+  imageSrc,
+  onOpenLightbox
+}) => {
+  if (imageSrc) {
+    return (
+      <div className="group relative rounded-xl overflow-hidden border border-slate-300 dark:border-[#263449] bg-slate-900 cursor-pointer">
+        <img
+          src={imageSrc}
+          alt={caption}
+          className="w-full h-auto object-cover max-h-[480px] group-hover:scale-105 transition-transform duration-300"
+          onClick={() => onOpenLightbox && onOpenLightbox(imageSrc, caption)}
+        />
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-black/70 text-white text-xs">
+            <ZoomIn className="w-4 h-4" /> Expand Architecture Diagram
+          </span>
+        </div>
+        <p className="p-3 text-xs text-center text-slate-400 font-mono bg-slate-900 border-t border-[#263449]">
+          {caption}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-xl border-2 border-dashed border-slate-300 dark:border-[#263449] bg-slate-100/50 dark:bg-[#101827]/70 p-8 text-center flex flex-col items-center justify-center gap-3">
+      <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-500 dark:text-[#38BDF8] flex items-center justify-center">
+        <Layers className="w-6 h-6" />
+      </div>
+      <div className="max-w-md">
+        <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+          Architecture Diagram: {title}
+        </p>
+        <p className="text-xs text-slate-500 dark:text-[#94A3B8] mt-1 font-mono">
+          {caption}
+        </p>
+      </div>
+      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-slate-200 dark:border-[#263449] text-[11px] font-mono text-slate-500 dark:text-slate-400 bg-white dark:bg-[#141F30]">
+        <ImageIcon className="w-3.5 h-3.5" />
+        <span>Ready for diagram upload (supports large resolutions & lightbox)</span>
+      </div>
+    </div>
+  );
+};
+
+src/components/Lightbox.tsx
+
+import React, { useEffect } from 'react';
+import { X } from 'lucide-react';
+
+interface LightboxProps {
+  isOpen: boolean;
+  src: string;
+  caption: string;
+  onClose: () => void;
+}
+
+export const Lightbox: React.FC<LightboxProps> = ({ isOpen, src, caption, onClose }) => {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4">
+      <button
+        onClick={onClose}
+        className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+        aria-label="Close Lightbox"
+      >
+        <X className="w-6 h-6" />
+      </button>
+
+      <div className="max-w-5xl max-h-[90vh] flex flex-col items-center">
+        <img
+          src={src}
+          alt={caption}
+          className="max-h-[80vh] w-auto max-w-full rounded-lg object-contain shadow-2xl"
+        />
+        {caption && (
+          <p className="mt-4 text-sm font-mono text-slate-300 text-center max-w-2xl">
+            {caption}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+src/components/ProjectDetailModal.tsx
+
+import React, { useEffect } from 'react';
+import { ProjectDetail } from '../types';
+import { ArchitecturePlaceholder } from './ArchitecturePlaceholder';
+import { 
+  X, 
+  Github, 
+  ExternalLink, 
+  Database, 
+  Cpu, 
+  Workflow, 
+  ShieldCheck, 
+  BarChart3, 
+  AlertCircle, 
+  CheckCircle2, 
+  Layers 
+} from 'lucide-react';
+
+interface ProjectDetailModalProps {
+  project: ProjectDetail | null;
+  onClose: () => void;
+  onOpenLightbox: (src: string, caption: string) => void;
+}
+
+export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
+  project,
+  onClose,
+  onOpenLightbox
+}) => {
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (project) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleEsc);
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [project, onClose]);
+
+  if (!project) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-black/80 backdrop-blur-sm">
+      <div className="relative w-full max-w-5xl bg-white dark:bg-[#101827] border border-slate-200 dark:border-[#263449] rounded-2xl shadow-2xl overflow-hidden my-8 max-h-[92vh] flex flex-col">
+        
+        {/* Modal Header */}
+        <div className="p-6 border-b border-slate-200 dark:border-[#263449] flex items-start justify-between bg-slate-50 dark:bg-[#141F30]">
+          <div>
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-cyan-600 dark:text-[#38BDF8]">
+                {project.category}
+              </span>
+              <span className="text-slate-400">•</span>
+              <span className="text-xs font-mono text-slate-500">Technical Deep Dive</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-[#F8FAFC]">
+              {project.title}
+            </h2>
+            <p className="text-sm text-cyan-600 dark:text-cyan-400 font-medium mt-1">
+              {project.subtitle}
+            </p>
+          </div>
+
+          <button
+            onClick={onClose}
+            className="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-[#101827] transition-colors"
+            aria-label="Close modal"
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+
+        {/* Modal Scrollable Body */}
+        <div className="p-6 sm:p-8 overflow-y-auto space-y-10 text-slate-700 dark:text-[#94A3B8]">
+          
+          {/* 1. Introduction & Overview */}
+          <section className="space-y-3">
+            <h3 className="text-base font-bold font-mono uppercase tracking-wider text-slate-900 dark:text-[#F8FAFC] flex items-center gap-2">
+              <span className="text-cyan-500">01.</span> Project Introduction
+            </h3>
+            <p className="leading-relaxed text-sm sm:text-base">
+              {project.shortDescription}
+            </p>
+          </section>
+
+          {/* 2 & 3. Business Problem & Objectives */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-5 rounded-xl border border-red-500/20 bg-red-500/5 dark:bg-[#141F30] space-y-2">
+              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-red-500 flex items-center gap-1.5">
+                <AlertCircle className="w-4 h-4" /> 02. The Business Problem
+              </h4>
+              <p className="text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                {project.problem}
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl border border-cyan-500/20 bg-cyan-500/5 dark:bg-[#141F30] space-y-2">
+              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-cyan-500 flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4" /> 03. Project Objectives
+              </h4>
+              <ul className="text-xs sm:text-sm space-y-1.5 text-slate-700 dark:text-slate-300">
+                {project.objectives.map((obj, i) => (
+                  <li key={i} className="flex items-start gap-1.5">
+                    <span className="text-cyan-400 font-bold">•</span>
+                    <span>{obj}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* 4 & 5. Solution Architecture & Diagram */}
+          <section className="space-y-4">
+            <h3 className="text-base font-bold font-mono uppercase tracking-wider text-slate-900 dark:text-[#F8FAFC] flex items-center gap-2">
+              <span className="text-cyan-500">04 & 05.</span> Solution Architecture & Blueprint
+            </h3>
+            <p className="leading-relaxed text-sm sm:text-base">
+              {project.solution}
+            </p>
+            
+            {/* Architecture Placeholder / Image */}
+            <div className="pt-2">
+              <ArchitecturePlaceholder
+                title={project.title}
+                caption={project.architectureCaption}
+                imageSrc={project.architectureDiagram}
+                onOpenLightbox={onOpenLightbox}
+              />
+            </div>
+          </section>
+
+          {/* 6-10. Technical Pipeline Deep Dive Grid */}
+          <div className="space-y-4">
+            <h3 className="text-base font-bold font-mono uppercase tracking-wider text-slate-900 dark:text-[#F8FAFC]">
+              <span className="text-cyan-500">06–10.</span> Detailed Technical Pipeline Execution
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Ingestion */}
+              <div className="p-4 rounded-xl border border-slate-200 dark:border-[#263449] bg-slate-50 dark:bg-[#141F30]">
+                <div className="flex items-center gap-2 text-cyan-500 font-semibold text-xs font-mono uppercase mb-1">
+                  <Database className="w-3.5 h-3.5" /> 06. Data Ingestion
+                </div>
+                <p className="text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                  {project.dataIngestion}
+                </p>
+              </div>
+
+              {/* Transformation */}
+              <div className="p-4 rounded-xl border border-slate-200 dark:border-[#263449] bg-slate-50 dark:bg-[#141F30]">
+                <div className="flex items-center gap-2 text-cyan-500 font-semibold text-xs font-mono uppercase mb-1">
+                  <Cpu className="w-3.5 h-3.5" /> 07. Transformation & Processing
+                </div>
+                <p className="text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                  {project.transformationAndProcessing}
+                </p>
+              </div>
+
+              {/* Storage & Modelling */}
+              <div className="p-4 rounded-xl border border-slate-200 dark:border-[#263449] bg-slate-50 dark:bg-[#141F30]">
+                <div className="flex items-center gap-2 text-cyan-500 font-semibold text-xs font-mono uppercase mb-1">
+                  <Layers className="w-3.5 h-3.5" /> 08. Storage & Data Modelling
+                </div>
+                <p className="text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                  {project.storageAndDataModelling}
+                </p>
+              </div>
+
+              {/* Orchestration */}
+              <div className="p-4 rounded-xl border border-slate-200 dark:border-[#263449] bg-slate-50 dark:bg-[#141F30]">
+                <div className="flex items-center gap-2 text-cyan-500 font-semibold text-xs font-mono uppercase mb-1">
+                  <Workflow className="w-3.5 h-3.5" /> 09. Data Orchestration
+                </div>
+                <p className="text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                  {project.dataOrchestration}
+                </p>
+              </div>
+            </div>
+
+            {/* Security & Governance */}
+            <div className="p-4 rounded-xl border border-slate-200 dark:border-[#263449] bg-slate-50 dark:bg-[#141F30]">
+              <div className="flex items-center gap-2 text-cyan-500 font-semibold text-xs font-mono uppercase mb-1">
+                <ShieldCheck className="w-3.5 h-3.5" /> 10. Security, Governance & CI/CD
+              </div>
+              <p className="text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                {project.securityAndGovernance}
+              </p>
+            </div>
+          </div>
+
+          {/* 11. Business Impact */}
+          <section className="space-y-3">
+            <h3 className="text-base font-bold font-mono uppercase tracking-wider text-slate-900 dark:text-[#F8FAFC] flex items-center gap-2">
+              <span className="text-cyan-500">11.</span> Analytics & Measured Business Impact
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {project.businessImpact.map((impact, i) => (
+                <div
+                  key={i}
+                  className="p-3.5 rounded-xl border border-emerald-500/20 bg-emerald-500/5 dark:bg-[#141F30] flex items-start gap-2.5 text-xs sm:text-sm"
+                >
+                  <BarChart3 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span className="text-slate-800 dark:text-slate-200">{impact}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* 12. Tech Stack Badges */}
+          <section className="space-y-3">
+            <h3 className="text-base font-bold font-mono uppercase tracking-wider text-slate-900 dark:text-[#F8FAFC] flex items-center gap-2">
+              <span className="text-cyan-500">12.</span> Technology Stack Applied
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {project.technologies.map((tech) => (
+                <span
+                  key={tech}
+                  className="px-3 py-1 text-xs font-mono font-medium rounded-lg border border-slate-200 dark:border-[#263449] bg-slate-100 dark:bg-[#141F30] text-slate-800 dark:text-slate-200"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </section>
+
+          {/* 13. GitHub Repository */}
+          <div className="pt-4 border-t border-slate-200 dark:border-[#263449] flex items-center justify-between">
+            <div>
+              <p className="text-xs font-mono uppercase text-slate-500">13. Source Repository</p>
+              <p className="text-sm font-semibold text-slate-900 dark:text-white">
+                {project.githubUrl ? 'Public Production Codebase Available' : 'Enterprise / Private Project Workspace'}
+              </p>
+            </div>
+
+            {project.githubUrl ? (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 shadow-md transition-all"
+              >
+                <Github className="w-4 h-4" />
+                <span>View on GitHub</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            ) : (
+              <span className="text-xs font-mono text-slate-400 bg-slate-100 dark:bg-[#141F30] px-3 py-2 rounded-lg border border-slate-200 dark:border-[#263449]">
+                Repository link coming soon
+              </span>
+            )}
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+src/components/Projects.tsx
+
+import React, { useState } from 'react';
+import { projectsData } from '../data/projectsData';
+import { ProjectDetail } from '../types';
+import { ProjectDetailModal } from './ProjectDetailModal';
+import { Lightbox } from './Lightbox';
+import { Github, ArrowRight, Layers, Sparkles } from 'lucide-react';
+
+export const Projects: React.FC = () => {
+  const [selectedProject, setSelectedProject] = useState<ProjectDetail | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string>('All');
+  const [lightboxState, setLightboxState] = useState<{ isOpen: boolean; src: string; caption: string }>({
+    isOpen: false,
+    src: '',
+    caption: ''
+  });
+
+  const categories = ['All', 'Microsoft Fabric', 'Azure Data Engineering'];
+
+  const filteredProjects = activeCategory === 'All'
+    ? projectsData
+    : projectsData.filter((p) => p.category === activeCategory);
+
+  const handleOpenLightbox = (src: string, caption: string) => {
+    setLightboxState({ isOpen: true, src, caption });
+  };
+
+  return (
+    <section id="projects" className="py-24 bg-white dark:bg-[#080D18] relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Heading */}
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <p className="text-xs font-mono font-semibold uppercase tracking-widest text-cyan-600 dark:text-[#38BDF8] mb-2">
+            Production Data Platforms
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-[#F8FAFC]">
+            Featured Engineering Projects
+          </h2>
+          <p className="text-sm text-slate-600 dark:text-[#94A3B8] mt-3">
+            Real-world lakehouses, incremental PySpark pipelines, AI data agents, and automated Azure data architectures.
+          </p>
+          <div className="mt-3 w-16 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto rounded-full" />
+        </div>
+
+        {/* Filter Tabs */}
+        <div className="flex items-center justify-center gap-2 mb-14 flex-wrap">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
+                activeCategory === cat
+                  ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/20'
+                  : 'bg-slate-100 dark:bg-[#141F30] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-[#263449]'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {filteredProjects.map((project, idx) => (
+            <div
+              key={project.id}
+              className="group rounded-2xl border border-slate-200 dark:border-[#263449] bg-slate-50/50 dark:bg-[#141F30] overflow-hidden hover:border-cyan-500/50 transition-all duration-300 hover:shadow-xl dark:hover:shadow-cyan-950/20 flex flex-col justify-between"
+            >
+              <div>
+                {/* Visual Cover / Architecture Placeholder */}
+                <div className="relative h-48 bg-gradient-to-br from-slate-200 via-slate-100 to-white dark:from-[#101827] dark:via-[#0b121e] dark:to-[#141F30] border-b border-slate-200 dark:border-[#263449] p-6 flex flex-col justify-between overflow-hidden">
+                  <div className="flex items-center justify-between z-10">
+                    <span className="text-[11px] font-mono font-bold tracking-wider uppercase px-2.5 py-1 rounded bg-white/80 dark:bg-[#141F30]/90 text-cyan-600 dark:text-[#38BDF8] border border-cyan-500/20">
+                      PROJECT 0{idx + 1}
+                    </span>
+                    {project.id === 'ai-powered-learning-ecosystem' && (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-mono uppercase bg-amber-500/10 text-amber-500 border border-amber-500/30 px-2 py-0.5 rounded-full">
+                        <Sparkles className="w-3 h-3" /> AI-Agent
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="z-10">
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-[#F8FAFC] group-hover:text-cyan-500 dark:group-hover:text-[#38BDF8] transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-xs text-slate-500 dark:text-[#94A3B8] font-mono mt-0.5">
+                      {project.subtitle}
+                    </p>
+                  </div>
+
+                  {/* Subtle graphical background pattern */}
+                  <div className="absolute right-3 bottom-3 opacity-10 dark:opacity-20 text-cyan-400 pointer-events-none">
+                    <Layers className="w-32 h-32" />
+                  </div>
+                </div>
+
+                {/* Card Body */}
+                <div className="p-6 space-y-4">
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-[#94A3B8] leading-relaxed line-clamp-3">
+                    {project.shortDescription}
+                  </p>
+
+                  {/* Core Impact Highlight */}
+                  <div className="space-y-1.5 pt-2">
+                    <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-semibold">
+                      Key Impact:
+                    </p>
+                    <ul className="text-xs text-slate-700 dark:text-slate-300 space-y-1">
+                      {project.businessImpact.slice(0, 2).map((impact, i) => (
+                        <li key={i} className="flex items-start gap-1.5">
+                          <span className="text-cyan-500 font-bold">•</span>
+                          <span className="line-clamp-1">{impact}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Tech Stack Pills */}
+                  <div className="pt-2 flex flex-wrap gap-1.5">
+                    {project.technologies.slice(0, 6).map((tech) => (
+                      <span
+                        key={tech}
+                        className="text-[11px] font-mono px-2 py-0.5 rounded bg-white dark:bg-[#101827] text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-[#263449]"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {project.technologies.length > 6 && (
+                      <span className="text-[11px] font-mono px-1.5 py-0.5 text-slate-400">
+                        +{project.technologies.length - 6} more
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="px-6 pb-6 pt-2 border-t border-slate-100 dark:border-[#263449]/50 flex items-center justify-between gap-3">
+                <button
+                  onClick={() => setSelectedProject(project)}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-600 dark:text-[#38BDF8] hover:gap-2.5 transition-all"
+                >
+                  <span>View Full Architecture & Details</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-[#101827] transition-colors"
+                    aria-label={`GitHub Repository for ${project.title}`}
+                    title="View GitHub Repository"
+                  >
+                    <Github className="w-4 h-4" />
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+
+      {/* Interactive Detail Modal with all 13 sections */}
+      <ProjectDetailModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+        onOpenLightbox={handleOpenLightbox}
+      />
+
+      {/* Image Lightbox */}
+      <Lightbox
+        isOpen={lightboxState.isOpen}
+        src={lightboxState.src}
+        caption={lightboxState.caption}
+        onClose={() => setLightboxState({ isOpen: false, src: '', caption: '' })}
+      />
+    </section>
+  );
+};
+
+src/components/Certifications.tsx
+
+import React, { useState } from 'react';
+import { certificationsData } from '../data/certificationsData';
+import { Award, Copy, Check, Calendar, ExternalLink } from 'lucide-react';
+
+export const Certifications: React.FC = () => {
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const handleCopy = (id: string, text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2500);
+  };
+
+  return (
+    <section id="certifications" className="py-24 bg-slate-50 dark:bg-[#101827] border-y border-slate-200 dark:border-[#263449]/70 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Heading */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <p className="text-xs font-mono font-semibold uppercase tracking-widest text-cyan-600 dark:text-[#38BDF8] mb-2">
+            Credentials & Verification
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-[#F8FAFC]">
+            Professional Certifications
+          </h2>
+          <p className="text-sm text-slate-600 dark:text-[#94A3B8] mt-3">
+            Industry credentials in Microsoft Fabric, Azure Databricks, Apache Spark, and cloud data workflows.
+          </p>
+          <div className="mt-3 w-16 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto rounded-full" />
+        </div>
+
+        {/* Certifications Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {certificationsData.map((cert) => (
+            <div
+              key={cert.id}
+              className="p-6 rounded-2xl border border-slate-200 dark:border-[#263449] bg-white dark:bg-[#141F30] shadow-sm hover:border-cyan-500/40 transition-all flex flex-col justify-between"
+            >
+              <div>
+                {/* Header Badge */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-500 dark:text-[#38BDF8] flex items-center justify-center">
+                    <Award className="w-5 h-5" />
+                  </div>
+                  <span className="text-[11px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 dark:bg-[#101827] text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-[#263449]">
+                    {cert.issuer}
+                  </span>
+                </div>
+
+                <h3 className="text-base font-bold text-slate-900 dark:text-[#F8FAFC] leading-snug mb-2">
+                  {cert.title}
+                </h3>
+
+                <div className="space-y-1 text-xs text-slate-500 dark:text-[#94A3B8]">
+                  <div className="flex items-center gap-1.5">
+                    <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                    <span>Issued: {cert.issueDate}</span>
+                  </div>
+                  {cert.expiryDate && (
+                    <div className="text-[11px] text-amber-500 font-mono">
+                      Expires: {cert.expiryDate}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Copyable Credential ID */}
+              {cert.credentialId && (
+                <div className="mt-6 pt-4 border-t border-slate-100 dark:border-[#263449]/60">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-mono text-[10px] uppercase text-slate-400">
+                      Credential ID
+                    </span>
+                    <button
+                      onClick={() => handleCopy(cert.id, cert.credentialId!)}
+                      className="inline-flex items-center gap-1 font-mono text-[11px] text-cyan-600 dark:text-[#38BDF8] hover:text-cyan-500 transition-colors"
+                      title="Copy Credential ID"
+                    >
+                      {copiedId === cert.id ? (
+                        <>
+                          <Check className="w-3 h-3 text-emerald-400" />
+                          <span className="text-emerald-400">Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3 h-3" />
+                          <span>Copy ID</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                  <p className="mt-1 font-mono text-[11px] text-slate-600 dark:text-slate-400 truncate bg-slate-50 dark:bg-[#101827] px-2 py-1 rounded border border-slate-200 dark:border-[#263449]">
+                    {cert.credentialId}
+                  </p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+src/components/Contact.tsx
+
+import React, { useState } from 'react';
+import { siteConfig } from '../config/siteConfig';
+import { Linkedin, Mail, Download, ArrowRight, Check, Send } from 'lucide-react';
+
+export const Contact: React.FC = () => {
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(siteConfig.links.email);
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2500);
+  };
+
+  return (
+    <section id="contact" className="py-24 bg-white dark:bg-[#080D18] relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Main Card */}
+        <div className="rounded-3xl border border-slate-200 dark:border-[#263449] bg-gradient-to-b from-slate-50 to-white dark:from-[#101827] dark:to-[#080D18] p-8 sm:p-14 shadow-2xl overflow-hidden relative">
+          
+          <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="max-w-3xl space-y-6 relative z-10">
+            {/* Small label */}
+            <p className="text-xs font-mono font-semibold uppercase tracking-widest text-cyan-600 dark:text-[#38BDF8]">
+              Let&apos;s Build Together
+            </p>
+
+            {/* Main Heading */}
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-[#F8FAFC] tracking-tight leading-tight">
+              Let&apos;s Build Something Meaningful With Data.
+            </h2>
+
+            {/* Description */}
+            <p className="text-base sm:text-lg text-slate-600 dark:text-[#94A3B8] leading-relaxed">
+              I am actively seeking Azure Data Engineer and Microsoft Fabric Data Engineer opportunities where I can contribute to building scalable data platforms, automated workflows and intelligent analytics solutions.
+            </p>
+
+            {/* Action Cards */}
+            <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              
+              {/* LinkedIn Contact */}
+              <a
+                href={siteConfig.links.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-5 rounded-2xl border border-slate-200 dark:border-[#263449] bg-white dark:bg-[#141F30] hover:border-cyan-500/50 transition-all flex items-center justify-between group shadow-sm"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 dark:text-[#38BDF8] flex items-center justify-center">
+                    <Linkedin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-mono text-slate-400">Professional Network</p>
+                    <p className="text-sm font-bold text-slate-900 dark:text-white">Connect on LinkedIn</p>
+                  </div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" />
+              </a>
+
+              {/* Email Contact (Configurable) */}
+              <div className="p-5 rounded-2xl border border-slate-200 dark:border-[#263449] bg-white dark:bg-[#141F30] flex items-center justify-between shadow-sm">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-500 dark:text-[#38BDF8] flex items-center justify-center">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-mono text-slate-400">Direct Inquiries</p>
+                    <a
+                      href={`mailto:${siteConfig.links.email}`}
+                      className="text-sm font-bold text-slate-900 dark:text-white hover:text-cyan-500 transition-colors"
+                    >
+                      {siteConfig.links.email}
+                    </a>
+                  </div>
+                </div>
+                <button
+                  onClick={handleCopyEmail}
+                  className="text-xs font-mono px-2.5 py-1 rounded bg-slate-100 dark:bg-[#101827] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#263449] hover:border-cyan-500"
+                >
+                  {copiedEmail ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : 'Copy'}
+                </button>
+              </div>
+
+            </div>
+
+            {/* Download CV CTA */}
+            <div className="pt-4 flex flex-wrap items-center gap-4">
+              <a
+                href={siteConfig.links.cvDownloadPath}
+                download={siteConfig.links.cvFilename}
+                className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 shadow-md shadow-cyan-500/20 transition-all hover:scale-105"
+              >
+                <Download className="w-4 h-4" />
+                <span>Download Curriculum Vitae (CV)</span>
+              </a>
+
+              <a
+                href={siteConfig.links.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold rounded-xl text-slate-800 dark:text-[#F8FAFC] bg-slate-100 dark:bg-[#141F30] border border-slate-300 dark:border-[#263449] hover:bg-slate-200 dark:hover:bg-[#101827] transition-all"
+              >
+                <Send className="w-4 h-4 text-cyan-400" />
+                <span>Message on LinkedIn</span>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+src/components/Footer.tsx
+
+import React from 'react';
+import { siteConfig } from '../config/siteConfig';
+import { Linkedin, Github, ArrowUp } from 'lucide-react';
+
+export const Footer: React.FC = () => {
+  const currentYear = new Date().getFullYear();
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  return (
+    <footer className="bg-slate-100 dark:bg-[#080D18] border-t border-slate-200 dark:border-[#263449] py-12 transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          
+          {/* Identity */}
+          <div className="space-y-1 text-center md:text-left">
+            <p className="font-bold tracking-wider text-base sm:text-lg text-slate-900 dark:text-[#F8FAFC]">
+              {siteConfig.name}
+            </p>
+            <p className="text-xs font-mono text-cyan-600 dark:text-[#38BDF8]">
+              Microsoft Fabric Data Engineer | Azure Data Engineer
+            </p>
+            <p className="text-xs text-slate-500 dark:text-[#94A3B8]">
+              &ldquo;Designed to transform data into intelligence.&rdquo;
+            </p>
+          </div>
+
+          {/* Socials & Top Button */}
+          <div className="flex items-center gap-4">
+            <a
+              href={siteConfig.links.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="p-2.5 rounded-xl border border-slate-200 dark:border-[#263449] bg-white dark:bg-[#141F30] text-slate-600 dark:text-[#94A3B8] hover:text-cyan-500 dark:hover:text-[#38BDF8] transition-colors"
+            >
+              <Linkedin className="w-4 h-4" />
+            </a>
+
+            <button
+              onClick={scrollToTop}
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 dark:border-[#263449] bg-white dark:bg-[#141F30] text-xs font-mono text-slate-600 dark:text-[#94A3B8] hover:text-cyan-500 dark:hover:text-[#38BDF8] transition-colors"
+              title="Back to Top"
+            >
+              <span>TOP</span>
+              <ArrowUp className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+        </div>
+
+        {/* Dynamic Copyright */}
+        <div className="mt-8 pt-6 border-t border-slate-200 dark:border-[#263449]/50 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-[#94A3B8] gap-2">
+          <p>© {currentYear} {siteConfig.name}. All rights reserved.</p>
+          <p className="font-mono text-[11px]">
+            Engineered with React, TypeScript & Microsoft Fabric Design System.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+5. Application Root & Tailwind Config
+
+src/App.tsx
+
+import React from 'react';
+import { ThemeProvider } from './context/ThemeContext';
+import { Navbar } from './components/Navbar';
+import { Hero } from './components/Hero';
+import { About } from './components/About';
+import { Skills } from './components/Skills';
+import { Experience } from './components/Experience';
+import { Projects } from './components/Projects';
+import { Certifications } from './components/Certifications';
+import { Contact } from './components/Contact';
+import { Footer } from './components/Footer';
+
+export const App: React.FC = () => {
+  return (
+    <ThemeProvider>
+      <div className="min-h-screen font-sans bg-[#F8FAFC] dark:bg-[#080D18] text-[#0F172A] dark:text-[#F8FAFC] transition-colors duration-300 selection:bg-cyan-500/20 selection:text-cyan-300">
+        <Navbar />
+        <main>
+          <Hero />
+          <About />
+          <Skills />
+          <Experience />
+          <Projects />
+          <Certifications />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
+    </ThemeProvider>
+  );
+};
+
+export default App;
+
+tailwind.config.js
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        darkBg: "#080D18",
+        darkSecondary: "#101827",
+        darkCard: "#141F30",
+        darkBorder: "#263449",
+        darkAccent: "#38BDF8",
+        darkAccentSecondary: "#22D3EE",
+        lightBg: "#F8FAFC",
+        lightSecondary: "#FFFFFF",
+        lightCard: "#FFFFFF",
+        lightBorder: "#E2E8F0",
+        lightAccent: "#0284C7",
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['Geist Mono', 'Fira Code', 'monospace']
+      }
+    },
+  },
+  plugins: [],
+}
+
+src/index.css
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    @apply antialiased;
+  }
+}
+
+Highlights & Implementation Summary
+
+1.  Brand & Positioning: Positions Ziaul Haq Akash specifically as a Microsoft
+    Fabric Data Engineer and Azure Data Engineer, emphasizing OneLake,
+    Lakehouses, Medallion Architecture, Databricks, PySpark, and conversational
+    AI agents.
+2.  Three-Way Theme System: Clean switcher for Dark (#080D18), Light (#F8FAFC),
+    and System Preference, synchronized to localStorage without color inversion
+    or contrast loss.
+3.  Architecture-First Visuals: Real Medallion Architecture data-flow diagram in
+    the Hero, custom placeholders ready for large blueprint diagrams, and a full
+    modal lightbox image viewer.
+4.  13-Section Project Deep Dives: Clicking any featured project opens a
+    detailed modal covering data ingestion, transformation, storage modeling,
+    orchestration, security/governance, impact metrics, and repository links.
+5.  Future-Proof Expansion: Adding Project 05 requires just uncommenting and
+    updating the provided template in src/data/projectsData.ts.
+6.  Accurate Credentials & Details: Includes copyable credential IDs with
+    tooltip confirmation, verified education details, and cleanly distinguished
+    professional career experience.
