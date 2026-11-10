@@ -38,8 +38,8 @@ export const projectsData: ProjectDetail[] = [
       'CI/CD'
     ],
     githubUrl: undefined, // Add repository URL when available
-    architectureDiagram: '/src/assets/images/diagram_fabric_ecosystem_1794308278069.jpg',
-    coverImage: '/src/assets/images/diagram_fabric_ecosystem_1794308278069.jpg',
+    architectureDiagram: '/src/assets/images/AI_Powered_Learning_Ecosystem_Microsoft_Fabric.jpg',
+    coverImage: '/src/assets/images/AI_Powered_Learning_Ecosystem_Microsoft_Fabric.jpg',
     architectureCaption: 'Microsoft Fabric Medallion Architecture & AI Data Agent Flow',
     dataIngestion:
       'Fabric Data Pipelines orchestrate scheduled extractions from enterprise LMS endpoints directly into OneLake Bronze layer in original Parquet/JSON formats.',
@@ -90,8 +90,8 @@ export const projectsData: ProjectDetail[] = [
     ],
     githubUrl:
       'https://github.com/ziaul-akash/Enterprise-Mobility-Data-Engine-End-to-End-Incremental-ETL-with-Azure-Databricks',
-    architectureDiagram: '/src/assets/images/diagram_mobility_databricks_1794308278085.jpg',
-    coverImage: '/src/assets/images/diagram_mobility_databricks_1794308278085.jpg',
+    architectureDiagram: '/src/assets/images/Enterprise_Mobility_Data_Engine_solution_architecture.jpg',
+    coverImage: '/src/assets/images/Enterprise_Mobility_Data_Engine_solution_architecture.jpg',
     architectureCaption: 'Azure Databricks Incremental Lakehouse Pipeline & Unity Catalog Architecture',
     dataIngestion:
       'ADLS Gen2 landing container ingested raw trip files with idempotent processing flags to prevent duplicate processing cycles.',
@@ -142,8 +142,8 @@ export const projectsData: ProjectDetail[] = [
     ],
     githubUrl:
       'https://github.com/ziaul-akash/PandemicVision-End-to-End-Data-Intelligence-Platform',
-    architectureDiagram: '/src/assets/images/diagram_pandemicvision_azure_1794308281608.jpg',
-    coverImage: '/src/assets/images/diagram_pandemicvision_azure_1794308281608.jpg',
+    architectureDiagram: '/src/assets/images/pandemic_vision_covid19_solution_architecture.png',
+    coverImage: '/src/assets/images/pandemic_vision_covid19_solution_architecture.png',
     architectureCaption: 'PandemicVision Multi-Stage Azure Data Factory & PySpark Architecture',
     dataIngestion:
       'Azure Data Factory copy activities extracting daily feeds from ECDC HTTP APIs and population reference files into ADLS Gen2 raw zones.',
@@ -199,8 +199,8 @@ export const projectsData: ProjectDetail[] = [
     ],
     githubUrl:
       'https://github.com/ziaul-akash/SalesStream-Automated-CRM-Data-Engineering-Business-Intelligence',
-    architectureDiagram: '/src/assets/images/diagram_salesstream_synapse_1794308279249.jpg',
-    coverImage: '/src/assets/images/diagram_salesstream_synapse_1794308279249.jpg',
+    architectureDiagram: '/src/assets/images/salesstream_solution_architecture.png',
+    coverImage: '/src/assets/images/salesstream_solution_architecture.png',
     architectureCaption: 'SalesStream Enterprise Azure Data Pipeline & Synapse Architecture',
     dataIngestion:
       'Azure Data Factory parameterized pipelines ingesting multi-entity CRM records into ADLS Gen2 raw landing zones.',
