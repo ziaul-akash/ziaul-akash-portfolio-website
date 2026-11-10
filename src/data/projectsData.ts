@@ -38,8 +38,8 @@ export const projectsData: ProjectDetail[] = [
       'CI/CD'
     ],
     githubUrl: undefined, // Add repository URL when available
-    architectureDiagram: '/src/assets/images/diagram_fabric_ecosystem_1794308278069.jpg',
-    coverImage: '/src/assets/images/diagram_fabric_ecosystem_1794308278069.jpg',
+    architectureDiagram: '/assets/aistudio/akash_pic_professional_grey_bg_b20683b1.png',
+    coverImage: '/assets/aistudio/akash_pic_professional_grey_bg_b20683b1.png',
     architectureCaption: 'Microsoft Fabric Solution Architecture & AI Data Agent Flow',
     dataIngestion:
       'Fabric Data Pipelines orchestrate scheduled extractions from enterprise LMS endpoints directly into OneLake Bronze layer in original Parquet/JSON formats.',
