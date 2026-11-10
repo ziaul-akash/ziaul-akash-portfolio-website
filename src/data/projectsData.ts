@@ -37,7 +37,7 @@ export const projectsData: ProjectDetail[] = [
       'Azure DevOps',
       'CI/CD'
     ],
-    githubUrl: undefined, // Add repository URL when available
+    githubUrl: 'https://github.com/ziaul-akash/AI-Powered-Learning-Ecosystem-Microsoft-Fabric', // Add repository URL when available
     architectureDiagram: '/assets/aistudio/ai_powered_learning_ecosystem_diagram.jpg',
     coverImage: '/assets/aistudio/ai_powered_learning_ecosystem_diagram.jpg',
     architectureCaption: 'Microsoft Fabric Solution Architecture & AI Data Agent Flow',
