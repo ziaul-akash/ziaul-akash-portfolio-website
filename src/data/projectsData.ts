@@ -55,7 +55,7 @@ export const projectsData: ProjectDetail[] = [
       'Direct Lake Power BI semantic models combined with a conversational AI agent that generates accurate answers and visual queries on demand.'
   },
   {
-  id: 'enterprise-mobility-data-engine',
+    id: 'enterprise-mobility-data-engine',
     title: 'Enterprise Mobility Data Engine',
     subtitle: 'End-to-End Incremental Data Pipeline | Azure Databricks',
     category: 'Azure Data Engineering',
@@ -207,6 +207,58 @@ export const projectsData: ProjectDetail[] = [
     ],
     analyticsAndImpact:
       'The platform establishes a scalable historical data foundation that can support future predictive analytics, demand forecasting and data-driven fleet management.'
+  },
+  {
+    id: 'pandemicvision',
+    title: 'PandemicVision',
+    subtitle: 'End-to-End Data Intelligence Platform',
+    category: 'Azure Data Engineering',
+    featured: true,
+    shortDescription:
+      'Developed an end-to-end cloud data engineering pipeline using Microsoft Azure to integrate, process and analyse COVID-19 data from ECDC and population reference datasets.',
+    problem:
+      'COVID-19 statistics were severely fragmented across external REST APIs and semi-structured cloud repositories, making data integration, population-adjusted analysis, and timely epidemiological reporting complex and inefficient.',
+    objectives: [
+      'Automate extraction from disparate public health APIs and storage endpoints.',
+      'Normalize multi-country metrics against standard population reference datasets.',
+      'Build a robust automated hybrid transformation pipeline (PySpark & HDInsight Hive SQL).',
+      'Deliver interactive visual analytics for country-level infection rate comparisons.'
+    ],
+    solution:
+      'Designed an automated Azure data pipeline to ingest, store, transform and enrich datasets using Azure Data Factory, ADLS Gen2, Databricks (PySpark) and HDInsight (Hive SQL). Loaded curated data into Azure SQL Database and developed interactive Power BI dashboards to visualise COVID-19 trends, country-level comparisons and population-adjusted metrics.',
+    businessImpact: [
+      'Centralised public health data ingestion across global reporting sources.',
+      'Reliable normalization eliminating discrepancies in per-capita incidence calculations.',
+      'Automated scheduled processing pipelines with comprehensive ADF monitoring.',
+      'Interactive Power BI executive dashboards enabling instant cross-country comparative reporting.'
+    ],
+    technologies: [
+      'Azure Data Factory',
+      'ADLS Gen2',
+      'Azure Databricks',
+      'PySpark',
+      'Azure HDInsight',
+      'Hive SQL',
+      'Azure SQL Database',
+      'Power BI'
+    ],
+    githubUrl:
+      'https://github.com/ziaul-akash/PandemicVision-End-to-End-Data-Intelligence-Platform',
+    architectureDiagram: '/assets/aistudio/pandemic_vision_covid19_solution_architecture.png',
+    coverImage: '/assets/aistudio/pandemic_vision_covid19_solution_architecture.png',
+    architectureCaption: 'PandemicVision Multi-Stage Azure Data Factory & PySpark Architecture',
+    dataIngestion:
+      'Azure Data Factory copy activities extracting daily feeds from ECDC HTTP APIs and population reference files into ADLS Gen2 raw zones.',
+    transformationAndProcessing:
+      'Azure Databricks PySpark notebooks for complex transformations alongside HDInsight Hive SQL jobs for legacy analytical cross-checks.',
+    storageAndDataModelling:
+      'ADLS Gen2 multi-tier storage backing Azure SQL Database staging and production analytical schemas.',
+    dataOrchestration:
+      'Azure Data Factory scheduled triggers, dependency handling, and pipeline alerts for failure management.',
+    securityAndGovernance:
+      'Azure Key Vault for credential and connection string secrets, Azure Active Directory RBAC permissions.',
+    analyticsAndImpact:
+      'Power BI dashboards visualizing infection trajectories, mortality rates per 100k population, and testing velocity.'
   },
   {
     id: 'salesstream',
