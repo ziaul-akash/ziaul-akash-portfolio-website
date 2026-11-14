@@ -30,7 +30,7 @@ export const professionalExperience: ExperienceItem[] = [
       'Addressed customer concerns and resolved issues promptly and professionally to maintain customer satisfaction.',
       'Processed customer transactions accurately, maintained clean and organised work areas, and supported smooth day-to-day operations.'
     ],
-    skillsApplied: ['Operational Excellence', 'Customer Communication', 'Issue Resolution', 'Fast-paced Collaboration']
+    skillsApplied: ['Customer Communication', 'Issue Resolution', 'Fast-paced Collaboration', 'Team Coordination', 'Time Management']
   },
   {
     id: 'exp-3',
@@ -46,7 +46,7 @@ export const professionalExperience: ExperienceItem[] = [
       'Enhanced website layouts, navigation, and overall user experience through ongoing improvements.',
       'Identified and resolved website issues, implemented updates, and supported the smooth operation of digital platforms.'
     ],
-    skillsApplied: ['Web Development', 'UI/UX Responsiveness', 'WordPress Customization', 'Frontend Engineering']
+    skillsApplied: ['Web Development', 'UI/UX Responsiveness', 'WordPress Customization', 'Front-End Development', 'Technical Troubleshooting', ]
   }
 ];
 
