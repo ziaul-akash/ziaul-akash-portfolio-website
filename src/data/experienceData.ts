@@ -9,12 +9,13 @@ export const professionalExperience: ExperienceItem[] = [
     location: 'London Area, United Kingdom',
     type: 'Employment',
     responsibilities: [
-      'Currently working at the intersection of technology operations, digital support and AI enablement.',
-      'Providing frontline IT and technology support to students and staff while helping improve digital literacy across the organisation.',
-      'Design and deliver training sessions on AI tools and eResources, translating complex technology into practical knowledge that users can apply.',
-      'Developing a strong understanding of business requirements, user experience, technology adoption and practical problem-solving.'
+      'Encourage the effective use of AI tools and emerging technologies by introducing users to their practical applications.',
+      'Design and deliver engaging training sessions on AI tools and digital resources, making technology accessible to users with different levels of digital confidence.',
+      'Provide frontline technical assistance to students and staff, troubleshooting issues and supporting day-to-day digital operations.',
+      'Digital Literacy & User Enablement: Help users build confidence in navigating digital platforms, AI-powered tools and online learning resources.',
+      'Understand user needs, identify common challenges and provide practical guidance to improve the overall digital experience.'
     ],
-    skillsApplied: ['AI Enablement', 'Technology Support', 'Digital Literacy', 'Stakeholder Training', 'Operations']
+    skillsApplied: ['AI Enablement', 'Generative AI Awareness', 'IT Support', 'Technical Assistance', 'Digital Literacy', 'Stakeholder Training']
   },
   {
     id: 'exp-2',
@@ -24,8 +25,10 @@ export const professionalExperience: ExperienceItem[] = [
     location: 'Camden Town, England, United Kingdom',
     type: 'Employment',
     responsibilities: [
-      'Delivered customer service in a fast-paced indoor theme park environment, supporting visitors, handling enquiries and resolving customer issues.',
-      'Maintained operational standards, represented the organisation professionally, operated attractions safely and supported retail transactions.'
+      'Assisted visitors with enquiries, provided clear guidance, and ensured a positive and welcoming experience throughout their visit.',
+      'Acted as a brand ambassador, representing the company professionally and communicating effectively with customers from diverse backgrounds.',
+      'Addressed customer concerns and resolved issues promptly and professionally to maintain customer satisfaction.',
+      'Processed customer transactions accurately, maintained clean and organised work areas, and supported smooth day-to-day operations.'
     ],
     skillsApplied: ['Operational Excellence', 'Customer Communication', 'Issue Resolution', 'Fast-paced Collaboration']
   },
@@ -37,9 +40,11 @@ export const professionalExperience: ExperienceItem[] = [
     location: 'Dhaka, Bangladesh',
     type: 'Employment',
     responsibilities: [
-      'Managed end-to-end website development across different platforms.',
-      'Improved website functionality, usability and responsiveness.',
-      'Built and integrated custom WordPress themes.'
+      'Managed end-to-end website development activities, from initial implementation to deployment, ensuring functional and visually engaging websites.',
+      'Improved website performance, usability, and responsiveness to provide a consistent experience across different devices and screen sizes.',
+      'Developed and customised WordPress themes, creating tailored website solutions based on client and business requirements.',
+      'Enhanced website layouts, navigation, and overall user experience through ongoing improvements.',
+      'Identified and resolved website issues, implemented updates, and supported the smooth operation of digital platforms.'
     ],
     skillsApplied: ['Web Development', 'UI/UX Responsiveness', 'WordPress Customization', 'Frontend Engineering']
   }
