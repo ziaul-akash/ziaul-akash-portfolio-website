@@ -34,7 +34,7 @@ export const professionalExperience: ExperienceItem[] = [
   },
   {
     id: 'exp-3',
-    role: 'Web Developer',
+    role: 'Full Stack Web Developer',
     organization: 'Systech Unimax',
     period: 'September 2020 – December 2022',
     location: 'Dhaka, Bangladesh',
